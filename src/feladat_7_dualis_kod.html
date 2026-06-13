@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7. feladat: Generátormátrix és Duális kód</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        .task-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .logic-box { background-color: #e8f4fd; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #2980b9; }
+        .generic-box { background-color: #fdf2e9; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #e67e22; }
+        .matrix-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; font-size: 1.2em; }
+        .matrix { border-left: 2px solid #333; border-right: 2px solid #333; padding: 0 10px; position: relative; }
+        .matrix::before, .matrix::after { content: ''; position: absolute; width: 5px; height: 100%; top: 0; border-top: 2px solid #333; border-bottom: 2px solid #333; }
+        .matrix::before { left: 0; border-left: 2px solid #333; }
+        .matrix::after { right: 0; border-right: 2px solid #333; }
+        .matrix table { border-collapse: collapse; }
+        .matrix td { padding: 5px 10px; text-align: center; border: none; }
+    </style>
+</head>
+<body>
+    <h1>7. feladat: Lineáris kód és Duális kód</h1>
+    
+    <div class="task-box">
+        <h2>Eredeti feladat</h2>
+        <p>Adott az alábbi generátormátrix. Adja meg a duális kód generátormátrixát és kódolja az üzeneteket!</p>
+        <div class="matrix-container">
+            <span>G = </span>
+            <div class="matrix">
+                <table>
+                    <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="logic-box">
+        <h2>Megoldás menete (Logika)</h2>
+        <ol>
+            <li><strong>Paritásellenőrző mátrix (H):</strong> Ha G = [I | P], akkor H = [P^T | I]. <br>
+                A duális kód generátormátrixa (G') pontosan ez a H mátrix lesz.</li>
+            <li><strong>Transzponálás:</strong> A P mátrix sorait írd le oszlopokként (ez a P^T).</li>
+            <li><strong>Kódolás:</strong> Az üzenetvektort (u) szorozd meg balról a generátormátrixszal: <code>c = u * G'</code>. <br>
+                Mivel bináris, csak azokat a sorokat kell összeadnod (XOR), ahol az üzenetben 1-es van.</li>
+        </ol>
+    </div>
+
+    <div class="generic-box">
+        <h2>Felkészülés más számokra</h2>
+        <p>Ha a mátrix változik:</p>
+        <ul>
+            <li>Vigyázz a méretekre! Ha G (k x n) méretű, akkor H ((n-k) x n) méretű lesz.</li>
+            <li>A bináris összeadásnál: 1+1 = 0, 1+0 = 1, 0+0 = 0.</li>
+            <li>A duális kód tulajdonsága, hogy minden szava merőleges az eredeti kód minden szavára.</li>
+        </ul>
+    </div>
+</body>
+</html>

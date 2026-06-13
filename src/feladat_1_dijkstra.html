@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. feladat: Dijkstra algoritmus</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        .task-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .logic-box { background-color: #e8f4fd; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #2980b9; }
+        .generic-box { background-color: #fdf2e9; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #e67e22; }
+        .diagram-box { background-color: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; border: 1px solid #ddd; }
+        code { background-color: #eee; padding: 2px 5px; border-radius: 4px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #3498db; color: white; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+</head>
+<body>
+    <h1>1. feladat: Dijkstra algoritmus</h1>
+    
+    <div class="task-box">
+        <h2>Eredeti feladat</h2>
+        <p>Határozza meg a Dijkstra algoritmus segítségével az F csúcsból az összes csúcsba a legolcsóbb utak költségeit! (A képen egy súlyozott gráf látható csúcsokkal A-tól J-ig). Csak a táblázat szürke részét kell kitölteni értelemszerűen!</p>
+        <div style="text-align: center; margin: 20px 0;">
+            <img src="dijkstra_graph_user.png" alt="Eredeti feladat képe" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 4px;">
+            <p style="font-size: 0.8em; color: #666;">(Eredeti feladat képe)</p>
+        </div>
+    </div>
+
+    <div class="logic-box">
+        <h2>Megoldás menete (Logika)</h2>
+        <ol>
+            <li><strong>Inicializálás:</strong> Készítsünk egy táblázatot az összes csúccsal. A kezdőponthoz (F) írjunk 0-t, az összes többihez végtelent (∞).</li>
+            <li><strong>Kiválasztás:</strong> Válaszd ki a legkisebb értékű, még nem rögzített csúcsot. Első körben ez az F (0).</li>
+            <li><strong>Frissítés (Relaxáció):</strong> Nézd meg az aktuális csúcs összes szomszédját. Ha az aktuális csúcs értéke + az él súlya kisebb, mint a szomszéd jelenlegi értéke, írd be az új, kisebb értéket.</li>
+            <li><strong>Ismétlés:</strong> Jelöld meg az aktuális csúcsot véglegesnek, és térj vissza a 2. lépéshez, amíg minden elérhető csúcsot nem rögzítettél.</li>
+        </ol>
+    </div>
+
+    <div class="generic-box">
+        <h2>Felkészülés más számokra</h2>
+        <p>Ha a gráf vagy a súlyok változnak, a módszer ugyanaz marad:</p>
+        <ul>
+            <li>Mindig a <strong>legkisebb aktuális költségű</strong> csúcsot vizsgáld meg legközelebb.</li>
+            <li>A táblázatban mindig csak akkor írj át értéket, ha az <strong>új út rövidebb</strong>, mint amit eddig ismertél.</li>
+            <li>Figyelj arra, hogy ha egy csúcsot már rögzítettél (kiválasztottad legkisebbként), annak az értéke már nem fog változni.</li>
+        </ul>
+    </div>
+</body>
+</html>

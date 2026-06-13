@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5. feladat: Hill-rejtjelező (Mátrix inverz mod m)</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        .task-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .logic-box { background-color: #e8f4fd; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #2980b9; }
+        .generic-box { background-color: #fdf2e9; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #e67e22; }
+        .matrix-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; font-size: 1.2em; }
+        .matrix { border-left: 2px solid #333; border-right: 2px solid #333; padding: 0 10px; position: relative; }
+        .matrix::before, .matrix::after { content: ''; position: absolute; width: 5px; height: 100%; top: 0; border-top: 2px solid #333; border-bottom: 2px solid #333; }
+        .matrix::before { left: 0; border-left: 2px solid #333; }
+        .matrix::after { right: 0; border-right: 2px solid #333; }
+        .matrix table { border-collapse: collapse; }
+        .matrix td { padding: 5px 10px; text-align: center; border: none; }
+    </style>
+</head>
+<body>
+    <h1>5. feladat: Hill-rejtjelező (Mátrix inverz mod 26)</h1>
+    
+    <div class="task-box">
+        <h2>Eredeti feladat</h2>
+        <p>Számítsa ki az A mátrix inverzét mod 26 felett!</p>
+        <div class="matrix-container">
+            <span>A = </span>
+            <div class="matrix">
+                <table>
+                    <tr><td>21</td><td>11</td></tr>
+                    <tr><td>23</td><td>14</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="logic-box">
+        <h2>Megoldás menete (Logika)</h2>
+        <ol>
+            <li><strong>Determináns:</strong> det(A) = (21 * 14) - (11 * 23). <br>
+                Számold ki mod 26: <code>det(A) mod 26</code>.</li>
+            <li><strong>Reciprok keresése:</strong> Keresd meg azt a számot (d⁻¹), amire <code>det(A) * d⁻¹ ≡ 1 (mod 26)</code>. (Euklideszi algoritmussal vagy próbálgatással).</li>
+            <li><strong>Adjugált mátrix:</strong> 2x2-esnél: cseréld fel a főátlót, a mellékátlónak vedd az ellentettjét (-11, -23). <br>
+                Vidd át mod 26-ba (pl. -11 ≡ 15 mod 26).</li>
+            <li><strong>Végeredmény:</strong> Szorozd meg az adjugált mátrix minden elemét d⁻¹-gyel, majd vedd a maradékot mod 26.</li>
+        </ol>
+    </div>
+
+    <div class="generic-box">
+        <h2>Felkészülés más számokra</h2>
+        <p>Ha a mátrix változik:</p>
+        <ul>
+            <li>Csak akkor van inverz, ha <strong>lnko(det(A), 26) = 1</strong>.</li>
+            <li>A negatív számokat mindig alakítsd át pozitívvá: <code>x mod 26 = (x % 26 + 26) % 26</code>.</li>
+            <li>A 2x2-es trükk: <code>[a b; c d] -> [d -b; -c a]</code>.</li>
+        </ul>
+    </div>
+</body>
+</html>

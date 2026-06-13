@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8. feladat: Jobbreguláris nyelvtan -> Automata</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        .task-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .logic-box { background-color: #e8f4fd; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #2980b9; }
+        .generic-box { background-color: #fdf2e9; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #e67e22; }
+        .diagram-box { background-color: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; border: 1px solid #ddd; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+</head>
+<body>
+    <h1>8. feladat: Jobbreguláris nyelvtanból véges automata</h1>
+    
+    <div class="task-box">
+        <h2>Eredeti feladat</h2>
+        <p>Adott egy jobbreguláris nyelvtan szabályrendszere (pl. S -> aS, S -> aB, A -> b, stb.). Készítsük el az automatát!</p>
+    </div>
+
+    <div class="diagram-box">
+        <h2>Az automata rajza</h2>
+        <div class="mermaid">
+graph LR
+    Start(( )) --> S((S))
+    S -- "a" --> S
+    S -- "a" --> B((B))
+    S -- "c" --> A((A))
+    A -- "c" --> A
+    A -- "b" --> E(((E)))
+    B -- "c" --> S
+    B -- "a" --> E(((E)))
+    A -- "b" --> B
+    A -- "c" --> B
+    A -- "b" --> C((C))
+    B -- "a" --> C((C))
+    C -- "a" --> E(((E)))
+    C -- "b" --> B
+        </div>
+    </div>
+
+    <div class="logic-box">
+        <h2>Megoldás menete (Logika)</h2>
+        <ol>
+            <li><strong>Állapotok:</strong> Minden nemterminális szimbólum (S, A, B, C) egy állapot az automatában.</li>
+            <li><strong>Új végállapot:</strong> Vegyél fel egy extra végállapotot (pl. E vagy F), ami a szavak végét jelzi.</li>
+            <li><strong>Átmenetek (szabályból él):</strong>
+                <ul>
+                    <li>Ha a szabály <code>A -> aB</code>, akkor az A állapotból 'a' jelre a B állapotba megyünk.</li>
+                    <li>Ha a szabály <code>A -> a</code>, akkor az A állapotból 'a' jelre az <strong>E (végállapotba)</strong> megyünk.</li>
+                </ul>
+            </li>
+            <li><strong>Kezdőállapot:</strong> A nyelvtan kezdőszimbóluma (S) lesz az automata kezdőállapota.</li>
+        </ol>
+    </div>
+
+    <div class="generic-box">
+        <h2>Felkészülés más számokra</h2>
+        <p>Ha a szabályok változnak:</p>
+        <ul>
+            <li>Mindig nézd meg, hogy a szabály jobb oldalán van-e nemterminális. Ha nincs, az az automata "elfogadó" ága lesz.</li>
+            <li>Egy állapotból egy jelre több él is indulhat (ekkor NFA-t kapsz), ez teljesen szabályos a konverziónál.</li>
+            <li>A terminális jelek (a, b, c) kerülnek az élekre, a nagybetűk (S, A, B) a körökbe.</li>
+        </ul>
+    </div>
+</body>
+</html>

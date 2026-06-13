@@ -1,0 +1,60 @@
+{
+  "A": [
+    {
+      "to": "B",
+      "weight": 11
+    },
+    {
+      "to": "C",
+      "weight": 7
+    },
+    {
+      "to": "D",
+      "weight": 6
+    },
+    {
+      "to": "H",
+      "weight": 15
+    }
+  ],
+  "B": [
+    {
+      "to": "A",
+      "weight": 11
+    },
+    {
+      "to": "C",
+      "weight": 9
+    },
+    {
+      "to": "H",
+      "weight": 9
+    }
+  ],
+  "C": [
+    {
+      "to": "A",
+      "weight": 7
+    },
+    {
+      "to": "B",
+      "weight": 9
+    }
+  ],
+  "D": [
+    {
+      "to": "A",
+      "weight": 6
+    }
+  ],
+  "H": [
+    {
+      "to": "A",
+      "weight": 15
+    },
+    {
+      "to": "B",
+      "weight": 9
+    }
+  ]
+}

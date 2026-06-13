@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dijkstra Algoritmus Kalkulátor</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 1100px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; }
+        .input-field { display: flex; flex-direction: column; }
+        input, button, select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #3498db; color: white; cursor: pointer; border: none; font-weight: bold; transition: background 0.3s; }
+        button:hover { background-color: #2980b9; }
+        button.reset { background-color: #e74c3c; }
+        button.reset:hover { background-color: #c0392b; }
+        button.secondary { background-color: #95a5a6; }
+        button.secondary:hover { background-color: #7f8c8d; }
+        button.success { background-color: #27ae60; }
+        button.success:hover { background-color: #219150; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; font-size: 0.9em; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #3498db; color: white; }
+        .edge-list { margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; display: flex; gap: 20px; flex-wrap: wrap; }
+        .edge-list > div { flex: 1; min-width: 300px; }
+        .diagram-container { background: white; padding: 10px; border: 1px solid #eee; border-radius: 4px; min-height: 300px; display: flex; align-items: center; justify-content: center; overflow: auto; }
+        .result-section, .steps-section { margin-top: 30px; display: none; }
+        .storage-section { margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 4px; border: 1px dashed #ccc; }
+        .storage-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .storage-list { margin-top: 10px; max-height: 150px; overflow-y: auto; }
+        .storage-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 10px; background: white; border: 1px solid #eee; margin-bottom: 5px; border-radius: 3px; }
+        .storage-item:hover { background: #f0f7ff; }
+        .file-input { display: none; }
+        .step-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: white; border-left: 5px solid #3498db; }
+        .step-card h4 { margin-top: 0; color: #2c3e50; }
+        .highlight { background-color: #fff9c4; font-weight: bold; }
+        .update-text { color: #27ae60; font-size: 0.85em; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+    </script>
+</head>
+<body>
+    <h1>Dijkstra Algoritmus Kalkulátor</h1>
+    
+    <div class="container">
+        <div class="storage-section">
+            <h3>Gráf Kezelés (Mentés/Betöltés)</h3>
+            <div class="storage-controls">
+                <input type="text" id="saveName" placeholder="Mentés neve..." style="flex: 1; min-width: 200px;">
+                <button class="success" onclick="saveToBrowser()">Mentés Böngészőbe</button>
+                <button class="secondary" onclick="exportToFile()">Exportálás fájlba</button>
+                <button class="secondary" onclick="document.getElementById('fileInput').click()">Importálás fájlból</button>
+                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="importFromFile(event)">
+            </div>
+            <div id="storageList" class="storage-list"></div>
+        </div>
+
+        <h3 style="margin-top: 30px;">Élek hozzáadása</h3>
+        <div class="input-group">
+            <div class="input-field">
+                <label>Honnan:</label>
+                <input type="text" id="fromNode" placeholder="A" style="width: 60px;">
+            </div>
+            <div class="input-field">
+                <label>Hova:</label>
+                <input type="text" id="toNode" placeholder="B" style="width: 60px;">
+            </div>
+            <div class="input-field">
+                <label>Súly:</label>
+                <input type="number" id="weight" placeholder="10" style="width: 80px;">
+            </div>
+            <button onclick="addEdge()">Hozzáadás</button>
+            <button class="reset" onclick="resetGraph()">Gráf Törlése</button>
+        </div>
+
+        <div class="edge-list">
+            <div>
+                <h3>Élek listája</h3>
+                <div id="edgeDisplay">Nincs még hozzáadott él.</div>
+            </div>
+            <div>
+                <h3>Gráf vizualizáció</h3>
+                <div id="diagramContainer" class="diagram-container">
+                    <div id="mermaidGraph"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group" style="margin-top: 30px;">
+            <div class="input-field">
+                <label>Kezdőpont:</label>
+                <input type="text" id="startNode" placeholder="F" style="width: 60px;">
+            </div>
+            <button class="success" onclick="calculateDijkstra()" style="padding: 10px 20px;">SZÁMÍTÁS FUTTATÁSA</button>
+        </div>
+
+        <div id="stepsSection" class="steps-section">
+            <h2>Algoritmus Lépései</h2>
+            <div id="stepsContainer"></div>
+        </div>
+
+        <div id="resultSection" class="result-section">
+            <h2>Végeredmény</h2>
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Célcsúcs</th>
+                        <th>Legkisebb költség</th>
+                        <th>Útvonal</th>
+                    </tr>
+                </thead>
+                <tbody id="resultBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let graph = {};
+
+        async function updateGraphVisual() {
+            const element = document.getElementById('mermaidGraph');
+            let mermaidDefinition = 'graph TD\n';
+            let edges = [];
+            let hasEdges = false;
+
+            for (let node in graph) {
+                graph[node].forEach(edge => {
+                    const edgeKey = [node, edge.to].sort().join('-');
+                    if (!edges.includes(edgeKey)) {
+                        edges.push(edgeKey);
+                        mermaidDefinition += `    ${node} ---|${edge.weight}| ${edge.to}\n`;
+                        hasEdges = true;
+                    }
+                });
+            }
+
+            if (!hasEdges) {
+                element.innerHTML = '<p style="color: #ccc;">A gráf üres</p>';
+                return;
+            }
+
+            try {
+                const { render } = mermaid;
+                const id = 'graph-' + Math.floor(Math.random() * 10000);
+                const { svg } = await render(id, mermaidDefinition);
+                element.innerHTML = svg;
+            } catch (e) {
+                element.innerHTML = '<p style="color: red;">Hiba a rajzoláskor</p>';
+            }
+        }
+
+        function addEdge() {
+            const from = document.getElementById('fromNode').value.trim().toUpperCase();
+            const to = document.getElementById('toNode').value.trim().toUpperCase();
+            const weight = parseInt(document.getElementById('weight').value);
+
+            if (!from || !to || isNaN(weight)) {
+                alert('Kérlek adj meg minden adatot helyesen!');
+                return;
+            }
+
+            if (!graph[from]) graph[from] = [];
+            if (!graph[to]) graph[to] = [];
+
+            graph[from].push({ to, weight });
+            graph[to].push({ to: from, weight });
+
+            updateUI();
+            document.getElementById('fromNode').value = '';
+            document.getElementById('toNode').value = '';
+            document.getElementById('weight').value = '';
+            document.getElementById('fromNode').focus();
+        }
+
+        function updateUI() {
+            updateEdgeDisplay();
+            updateGraphVisual();
+        }
+
+        function updateEdgeDisplay() {
+            const display = document.getElementById('edgeDisplay');
+            let html = '<ul>';
+            let edges = [];
+            for (let node in graph) {
+                graph[node].forEach(edge => {
+                    const edgeKey = [node, edge.to].sort().join('-');
+                    if (!edges.includes(edgeKey)) {
+                        edges.push(edgeKey);
+                        html += `<li><strong>${node}</strong> &mdash; <strong>${edge.to}</strong> (súly: ${edge.weight})</li>`;
+                    }
+                });
+            }
+            html += '</ul>';
+            display.innerHTML = edges.length > 0 ? html : 'Nincs még hozzáadott él.';
+        }
+
+        function resetGraph() {
+            if (Object.keys(graph).length > 0 && !confirm('Biztosan törlöd a teljes gráfot?')) return;
+            graph = {};
+            updateUI();
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('stepsSection').style.display = 'none';
+        }
+
+        function calculateDijkstra() {
+            const startNode = document.getElementById('startNode').value.trim().toUpperCase();
+            if (!startNode || !graph[startNode]) {
+                alert('Érvénytelen kezdőpont!');
+                return;
+            }
+
+            const nodes = Object.keys(graph).sort();
+            const distances = {};
+            const previous = {};
+            const visited = new Set();
+            const steps = [];
+
+            nodes.forEach(node => {
+                distances[node] = Infinity;
+                previous[node] = null;
+            });
+            distances[startNode] = 0;
+
+            let iteration = 1;
+            while (visited.size < nodes.length) {
+                let u = null;
+                nodes.forEach(node => {
+                    if (!visited.has(node)) {
+                        if (u === null || distances[node] < distances[u]) {
+                            u = node;
+                        }
+                    }
+                });
+
+                if (u === null || distances[u] === Infinity) break;
+
+                const currentStep = {
+                    iteration: iteration++,
+                    selectedNode: u,
+                    currentDistances: { ...distances },
+                    updates: []
+                };
+
+                visited.add(u);
+
+                graph[u].forEach(neighbor => {
+                    if (!visited.has(neighbor.to)) {
+                        const alt = distances[u] + neighbor.weight;
+                        if (alt < distances[neighbor.to]) {
+                            currentStep.updates.push({
+                                node: neighbor.to,
+                                oldDist: distances[neighbor.to],
+                                newDist: alt
+                            });
+                            distances[neighbor.to] = alt;
+                            previous[neighbor.to] = u;
+                        }
+                    }
+                });
+
+                steps.push(currentStep);
+            }
+
+            displaySteps(steps, nodes);
+            displayResults(distances, previous, startNode);
+        }
+
+        function displaySteps(steps, nodes) {
+            const container = document.getElementById('stepsContainer');
+            container.innerHTML = '';
+
+            steps.forEach(step => {
+                const card = document.createElement('div');
+                card.className = 'step-card';
+                
+                let updatesHtml = step.updates.length > 0 
+                    ? `<ul>${step.updates.map(upd => `<li>Frissítve: <strong>${upd.node}</strong> (${upd.oldDist === Infinity ? '∞' : upd.oldDist} &rarr; <strong>${upd.newDist}</strong>)</li>`).join('')}</ul>`
+                    : '<p><em>Nem történt frissítés.</em></p>';
+
+                let tableRows = nodes.map(node => {
+                    let val = step.currentDistances[node];
+                    let displayVal = val === Infinity ? '∞' : val;
+                    let isCurrent = node === step.selectedNode ? 'class="highlight"' : '';
+                    return `<td ${isCurrent}>${displayVal}</td>`;
+                }).join('');
+
+                card.innerHTML = `
+                    <h4>${step.iteration}. lépés: Kiválasztott csúcs: <strong>${step.selectedNode}</strong></h4>
+                    <p>Az aktuális legkisebb költségű, még nem véglegesített csúcs kiválasztása.</p>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <tr>${nodes.map(n => `<th>${n}</th>`).join('')}</tr>
+                            <tr>${tableRows}</tr>
+                        </table>
+                    </div>
+                    <h5>Szomszédok vizsgálata (Relaxáció):</h5>
+                    ${updatesHtml}
+                `;
+                container.appendChild(card);
+            });
+
+            document.getElementById('stepsSection').style.display = 'block';
+        }
+
+        function displayResults(distances, previous, startNode) {
+            const tbody = document.getElementById('resultBody');
+            tbody.innerHTML = '';
+            Object.keys(distances).sort().forEach(node => {
+                const tr = document.createElement('tr');
+                const path = [];
+                let curr = node;
+                while (curr !== null) {
+                    path.unshift(curr);
+                    curr = previous[curr];
+                }
+                tr.innerHTML = `
+                    <td><strong>${node}</strong></td>
+                    <td>${distances[node] === Infinity ? 'Elérhetetlen' : distances[node]}</td>
+                    <td>${path.join(' &rarr; ')}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('resultSection').style.display = 'block';
+            window.scrollTo(0, document.getElementById('stepsSection').offsetTop);
+        }
+
+        // --- Tárolás ---
+        function saveToBrowser() {
+            const name = document.getElementById('saveName').value.trim();
+            if (!name || Object.keys(graph).length === 0) { alert('Adj meg egy nevet és építs egy gráfot!'); return; }
+            const saved = JSON.parse(localStorage.getItem('dijkstra_graphs') || '{}');
+            saved[name] = graph;
+            localStorage.setItem('dijkstra_graphs', JSON.stringify(saved));
+            document.getElementById('saveName').value = '';
+            updateStorageList();
+            alert('Mentve!');
+        }
+        function loadFromBrowser(name) {
+            const saved = JSON.parse(localStorage.getItem('dijkstra_graphs') || '{}');
+            if (saved[name]) { graph = saved[name]; updateUI(); }
+        }
+        function deleteFromBrowser(name) {
+            if (!confirm(`Törlöd: ${name}?`)) return;
+            const saved = JSON.parse(localStorage.getItem('dijkstra_graphs') || '{}');
+            delete saved[name];
+            localStorage.setItem('dijkstra_graphs', JSON.stringify(saved));
+            updateStorageList();
+        }
+        function updateStorageList() {
+            const list = document.getElementById('storageList');
+            const saved = JSON.parse(localStorage.getItem('dijkstra_graphs') || '{}');
+            const keys = Object.keys(saved);
+            if (keys.length === 0) { list.innerHTML = '<em>Nincsenek mentések.</em>'; return; }
+            list.innerHTML = keys.map(name => `
+                <div class="storage-item">
+                    <span>${name}</span>
+                    <div>
+                        <button onclick="loadFromBrowser('${name}')" style="padding: 2px 5px; font-size: 0.8em;">Betöltés</button>
+                        <button class="reset" onclick="deleteFromBrowser('${name}')" style="padding: 2px 5px; font-size: 0.8em;">Törlés</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        function exportToFile() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(graph));
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", "dijkstra.json");
+            dl.click();
+        }
+        function importFromFile(e) {
+            const reader = new FileReader();
+            reader.onload = function(ev) { graph = JSON.parse(ev.target.result); updateUI(); };
+            reader.readAsText(e.target.files[0]);
+        }
+        updateStorageList();
+    </script>
+</body>
+</html>

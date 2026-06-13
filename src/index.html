@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Számítástudomány alapjai 2 - Vizsgafelkészítő</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #27ae60;
+            --dark: #2c3e50;
+            --light: #f4f7f6;
+            --white: #ffffff;
+            --text: #333;
+            --gray: #7f8c8d;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            line-height: 1.6; 
+            color: var(--text); 
+            background-color: var(--light);
+            padding-bottom: 50px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%);
+            color: var(--white);
+            padding: 80px 20px;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .calculator-promo {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-left: 8px solid var(--secondary);
+        }
+
+        .calculator-promo-text h2 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .btn-calc {
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-calc:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+            background-color: #219150;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .card h3 {
+            color: var(--dark);
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .btn-view {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+
+        .btn-view:hover {
+            color: var(--primary-dark);
+        }
+
+        .btn-view::after {
+            content: ' →';
+            margin-left: 5px;
+            transition: transform 0.2s;
+        }
+
+        .btn-view:hover::after {
+            transform: translateX(5px);
+        }
+
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .calculator-promo { flex-direction: column; text-align: center; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Számítástudomány alapjai 2</h1>
+            <p>Szakmai vizsgafelkészítő portál kidolgozott feladatokkal, ábrákkal és interaktív segédeszközökkel.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="calculator-promo">
+            <div class="calculator-promo-text">
+                <h2>Interaktív Dijkstra Kalkulátor</h2>
+                <p>Építsd fel a saját gráfodat, és nézd végig az algoritmus lépéseit!</p>
+            </div>
+            <a href="dijkstra_kalkulator.html" class="btn-calc">Kalkulátor Megnyitása</a>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <h3>1. Dijkstra algoritmus</h3>
+                    <p>Legrövidebb utak keresése súlyozott gráfban. Módszertan és eredeti vizsgafeladat.</p>
+                </div>
+                <a href="feladat_1_dijkstra.html" class="btn-view">Megnyitás</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>2. Huffman kódolás</h3>
+                    <p>Optimális prefix kódok előállítása statisztikai adatok alapján, fa-reprezentációval.</p>
+                </div>
+                <a href="feladat_2_huffman.html" class="btn-view">Megnyitás</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>3. NFA -> DFA konverzió</h3>
+                    <p>Nemdeterminisztikus véges automaták determinisztikussá tétele részhalmaz-konstrukcióval.</p>
+                </div>
+                <a href="feladat_3_nfa_dfa.html" class="btn-view">Megnyitás</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>4. Szindróma dekódolás</h3>
+                    <p>Hibajavító kódok dekódolása paritásellenőrző mátrix és szindróma táblázat segítségével.</p>
+                </div>
+                <a href="feladat_4_szindroma.html" class="btn-view">Megnyitás</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>5. Hill-rejtjelező</h3>
+                    <p>Mátrixműveletek és inverz számítás modulo 26 gyűrű felett a titkosításban.</p>
+                </div>
+                <a href="feladat_5_hill_inverz.html" class="btn-view">Megnyitás</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>6. MDS kód paraméterei</h3>
+                    <p>Maximális távolságú kódok hibajavító és hibaérzékelő képességének elemzése.</p>
+                </div>
+                <a href="feladat_6_mds_kod.html" class="btn-view">Megnyitás</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>7. Lineáris és Duális kód</h3>
+                    <p>Generátormátrixok, paritásellenőrzők és a duális kódtér összefüggései.</p>
+                </div>
+                <a href="feladat_7_dualis_kod.html" class="btn-view">Megnyitás</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>8. Nyelvtanból automata</h3>
+                    <p>Jobbreguláris nyelvtanok szabályainak átírása véges automata állapotátmeneteire.</p>
+                </div>
+                <a href="feladat_8_nyelvtan_automata.html" class="btn-view">Megnyitás</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Milton Friedman Egyetem - Számítástudomány Felkészítő Portál</p>
+        </footer>
+    </div>
+</body>
+</html>

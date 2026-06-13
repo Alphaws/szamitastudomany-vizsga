@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. feladat: NFA -> DFA konverzió</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        .task-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .logic-box { background-color: #e8f4fd; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #2980b9; }
+        .generic-box { background-color: #fdf2e9; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #e67e22; }
+        .diagram-box { background-color: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; border: 1px solid #ddd; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+</head>
+<body>
+    <h1>3. feladat: NFA -> DFA konverzió (Részhalmaz-konstrukció)</h1>
+    
+    <div class="task-box">
+        <h2>Eredeti feladat</h2>
+        <p>Készítsen egy teljesen definiált determinisztikus automatát az alábbi ábra alapján! (NFA csúcsokkal S, A, B, C). A megoldásnál a mozgások táblázatát kell megadni.</p>
+    </div>
+
+    <div class="diagram-box">
+        <h2>Eredeti NFA rajza</h2>
+        <div class="mermaid">
+graph LR
+    Start(( )) --> S((S))
+    S -- "a, b, c" --> S
+    S -- "b" --> A((A))
+    S -- "c" --> C((C))
+    A -- "c" --> B(((B)))
+    C -- "c" --> B(((B)))
+        </div>
+    </div>
+
+    <div class="logic-box">
+        <h2>Megoldás menete (Logika)</h2>
+        <ol>
+            <li><strong>Kezdőállapot:</strong> Az új automata kezdőállapota az eredeti kezdőállapota: {S}.</li>
+            <li><strong>Átmenetek vizsgálata:</strong> Vizsgáld meg, hogy az aktuális halmazból (pl. {S}) az 'a' jelre hova jutunk az eredetiben. Ha S-ből 'a'-ra A-ba és B-be is lehet menni, az új állapot {A, B} lesz.</li>
+            <li><strong>Új állapotok:</strong> Minden újonnan keletkező halmazt ({A, B}, {C, S}, stb.) vegyél fel új állapotként a táblázatba, és vizsgáld meg azokra is az összes bemeneti jelet.</li>
+            <li><strong>Teljes definiáltság:</strong> Ha egy halmazból egy jelre sehova nem vezet út, vezess be egy "csapda" állapotot (Ø vagy ∅), amiből minden jel önmagába mutat.</li>
+            <li><strong>Végállapotok:</strong> Minden olyan halmaz végállapot lesz az új automatában, amely tartalmazza az eredeti automata legalább egy végállapotát.</li>
+        </ol>
+    </div>
+
+    <div class="generic-box">
+        <h2>Felkészülés más ábrákra</h2>
+        <p>Ha az automata gráfja változik:</p>
+        <ul>
+            <li>Mindig módszeresen haladj: addig írd az új sorokat, amíg minden keletkezett halmaznak nincs megvizsgálva az átmenete.</li>
+            <li>A halmazokban az elemek sorrendje nem számít ({A, B} ugyanaz, mint {B, A}).</li>
+            <li>Ne felejtsd el a <strong>csapda állapotot</strong>, ha a feladat "teljesen definiált" automatát kér!</li>
+        </ul>
+    </div>
+</body>
+</html>

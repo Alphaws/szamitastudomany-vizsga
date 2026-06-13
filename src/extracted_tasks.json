@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Dijkstra algoritmus",
+    "text": "1. feladat Határozza meg a Dijkstra algoritmus segítségével az F csúcsból az összes csúcsba a legolcsóbb utak költségeit! (A képen egy súlyozott gráf látható csúcsokkal A-tól J-ig). Csak a táblázat szürke részét kell kitölteni értelemszerűen!",
+    "methodology": "A Dijkstra-algoritmus egy gráfban egy adott forráscsúcsból az összes többi csúcsba vezető legrövidebb utak meghatározására szolgál. Az algoritmus során minden csúcshoz egy távolságértéket rendelünk (kezdetben végtelen, a forrásnál 0). Iteratívan kiválasztjuk a legkisebb távolságú még nem rögzített csúcsot, rögzítjük, majd frissítjük a szomszédai távolságát, ha találtunk rövidebb utat hozzájuk."
+  },
+  {
+    "id": 2,
+    "title": "Huffman kódolás",
+    "text": "2. feladat A következő megadott betűk és az előfordulásaik száma alapján a Huffman kód felhasználásával töltse ki a szürke részeket! A betűk előfordulásai: A:4, B:5, C:3, D:2, E:5. A betűk kódjai: A:..., B:..., C:..., D:..., E:... A tároláshoz szükséges bitek száma Huffman kóddal: ... A tároláshoz szükséges bitek száma Huffman kód nélkül: ...",
+    "methodology": "A Huffman-kódolás egy optimális prefix kód előállítására szolgál. Az algoritmus során a két legkisebb gyakoriságú szimbólumot összevonjuk egy csomópontba, amíg egyetlen gyökér marad (Huffman-fa). A fában balra 0-t, jobbra 1-et írva kapjuk meg a kódokat. A szükséges bitek száma a gyakoriságok és a kódhosszok szorzatösszege. Kód nélkül fix hosszúságú kódot használunk (ceil(log2(n)))."
+  },
+  {
+    "id": 3,
+    "title": "Teljesen definiált determinisztikus automata",
+    "text": "3. feladat Készítsen egy teljesen definiált determinisztikus automatát az alábbi ábra alapján! A megoldásnál elég a mozgások táblázatát megadni az eredeti és az új automatára (töltse ki a szürke részt, lehet hogy marad üres sor a táblázatban)! (Az ábrán egy nemdeterminisztikus automata (NFA) látható csúcsokkal S, A, B, C)",
+    "methodology": "Egy nemdeterminisztikus automata (NFA) determinisztikussá tétele (DFA) a részhalmaz-konstrukcióval történik. Az új automata állapotai az eredeti automata állapotainak részhalmazai lesznek. Megvizsgáljuk, hogy az egyes részhalmazokból hova vezetnek az átmenetek az egyes bemeneti jelekre. A végállapotok azok a részhalmazok lesznek, amelyek tartalmazzák az eredeti automata legalább egy végállapotát. A 'teljesen definiált' azt jelenti, hogy minden állapothoz minden bemeneti jelre kell tartoznia átmenetnek."
+  },
+  {
+    "id": 4,
+    "title": "Szindróma dekódolás",
+    "text": "4. feladat Szindróma dekódolás segítségével határozza meg a megadott v vett szavakhoz tartozó c kódokat a megadott adatok alapján! (Csak a szürke részt kell kitölteni) H^T = [1 1 0; 1 0 1; 1 0 0; 0 1 0; 0 0 1]. Szindrómák és Mellékosztályvezetők listája (pl. 000 -> 00000, 001 -> 00001, stb.). v1=10100, v2=11101, v3=11001.",
+    "methodology": "A szindróma dekódolás során a vett 'v' szóhoz kiszámítjuk a szindrómát: s = v * H^T. A szindróma alapján a táblázatból kikeressük a hozzá tartozó hiba-vektort (mellékosztályvezetőt), jelöljük 'e'-vel. A helyes kódszó c = v + e (bináris esetben az összeadás és kivonás megegyezik a XOR művelettel)."
+  },
+  {
+    "id": 5,
+    "title": "Hill-rejtjelező mátrix inverze",
+    "text": "5. feladat Adott egy Hill-rejtjelező A mátrixa az alábbi alakban. Számítsa ki az A mátrix inverzét, majd karikázza be a megfelelő mátrixot! A = [21 11; 23 14].",
+    "methodology": "A Hill-rejtjelezésnél a mátrixot a modulo m (általában 26) gyűrű felett invertáljuk. Az inverz mátrix A^-1 = (det A)^-1 * adj(A) (mod m). Először kiszámítjuk a determinánst, megkeressük a multiplikatív inverzét mod m, majd megszorozzuk vele az adjungált mátrixot (2x2-es esetben a főátló elemeit megcseréljük, a mellékátló elemeinek előjelét váltjuk)."
+  },
+  {
+    "id": 6,
+    "title": "Maximális távolságú kód paraméterei",
+    "text": "6. feladat Adott egy C(15, 6) paraméterű maximális távolságú kód. Adja meg a következő értékeket (a szürke részen), a válaszát indokolja a felhasznált képlet megadásával! A felismerhető hibák maximális száma: ... A javítható hibák maximális száma: ...",
+    "methodology": "Maximális távolságú kód (MDS kód) esetén a minimális távolság d = n - k + 1. A felismerhető hibák száma f = d - 1. A javítható hibák száma t = floor((d - 1) / 2). Jelen esetben n=15, k=6, így d = 15 - 6 + 1 = 10."
+  },
+  {
+    "id": 7,
+    "title": "Lineáris bináris kód és duális kód",
+    "text": "7. feladat Adott egy lineáris bináris kód a generátormátrixával G = [1 0 1 1 0; 0 1 0 1 1]. Adja meg a duális kód (az eredeti kód paritásellenőrző mátrixa a duális kód generátormátrixa) generátormátrixát! Továbbá szintén a duális kódra vonatkozólag, adja meg a felírt üzenetekhez rendelt kódokat! (a szürke részt töltse ki)",
+    "methodology": "A lineáris bináris kód duális kódjának generátormátrixa (G') az eredeti kód paritásellenőrző mátrixa (H). Ha G szubstandard alakban van (G = [I | P]), akkor H = [P^T | I]. A kódszavak kiszámítása az üzenetvektor és a generátormátrix szorzataként történik (c = u * G') a bináris test felett."
+  },
+  {
+    "id": 8,
+    "title": "Jobbreguláris nyelvtan és véges automata",
+    "text": "8. feladat Adott a következő jobbreguláris nyelvtan: G= {S,N,P,S}, ahol S={a,b,c}; N={S,A,B,C}; P:={S->aS; S->aB; S->cA; A->cA; A->b; B->cS; B->a; A->bB; A->cB; A->bC; B->aC; C->a; C->bB }. Készítsük el a vele azonos nyelvet megadó véges automatát!",
+    "methodology": "Egy jobbreguláris nyelvtanból véges automata készíthető úgy, hogy a nyelvtan nemterminális szimbólumai lesznek az automata állapotai. Bevezetünk egy új végállapotot (E) a terminálisba vezető szabályokhoz. A szabályok alapján (pl. A -> aB) definiáljuk az átmeneti függvényt (delta(A, a) = B). Ha egy szabály alakja A -> a, akkor delta(A, a) = E."
+  }
+]

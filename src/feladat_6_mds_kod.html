@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6. feladat: MDS kód paraméterei</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        .task-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .logic-box { background-color: #e8f4fd; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #2980b9; }
+        .generic-box { background-color: #fdf2e9; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #e67e22; }
+    </style>
+</head>
+<body>
+    <h1>6. feladat: MDS (Maximális távolságú) kód</h1>
+    
+    <div class="task-box">
+        <h2>Eredeti feladat</h2>
+        <p>Adott egy C(15, 6) paraméterű maximális távolságú kód. <br>
+        Hány hiba ismerhető fel és hány javítható?</p>
+    </div>
+
+    <div class="logic-box">
+        <h2>Megoldás menete (Logika)</h2>
+        <ol>
+            <li><strong>Minimális távolság (d):</strong> MDS kódnál d = n - k + 1. <br>
+                Itt: <code>d = 15 - 6 + 1 = 10</code>.</li>
+            <li><strong>Felismerhető hibák (f):</strong> A kód f = d - 1 hibát képes felismerni. <br>
+                Itt: <code>10 - 1 = 9</code>.</li>
+            <li><strong>Javítható hibák (t):</strong> A kód t = ⌊(d - 1) / 2⌋ hibát képes javítani. <br>
+                Itt: <code>floor(9 / 2) = 4</code>.</li>
+        </ol>
+    </div>
+
+    <div class="generic-box">
+        <h2>Felkészülés más számokra</h2>
+        <p>Ha az (n, k) paraméterek változnak:</p>
+        <ul>
+            <li>Az MDS kód kulcsa a <strong>Singleton-korlát</strong>: d ≤ n - k + 1. MDS esetén itt egyenlőség van.</li>
+            <li>Jegyezd meg a két alapképletet: <code>f = d-1</code> és <code>t = floor((d-1)/2)</code>. Ezek minden blokkkódra igazak, nem csak az MDS-re, de az MDS-nél a d-t az n és k-ból egyből tudod.</li>
+        </ul>
+    </div>
+</body>
+</html>

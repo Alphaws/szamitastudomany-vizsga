@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4. feladat: Szindróma dekódolás</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        .task-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .logic-box { background-color: #e8f4fd; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #2980b9; }
+        .generic-box { background-color: #fdf2e9; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #e67e22; }
+        .matrix-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; font-size: 1.1em; }
+        .matrix { border-left: 2px solid #333; border-right: 2px solid #333; padding: 0 10px; position: relative; }
+        .matrix::before, .matrix::after { content: ''; position: absolute; width: 5px; height: 100%; top: 0; border-top: 2px solid #333; border-bottom: 2px solid #333; }
+        .matrix::before { left: 0; border-left: 2px solid #333; }
+        .matrix::after { right: 0; border-right: 2px solid #333; }
+        .matrix table { border-collapse: collapse; }
+        .matrix td { padding: 3px 8px; text-align: center; border: none; }
+        table.syndrome-table { border-collapse: collapse; width: 50%; margin: 10px auto; background: white; }
+        table.syndrome-table th, table.syndrome-table td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        table.syndrome-table th { background-color: #3498db; color: white; }
+    </style>
+</head>
+<body>
+    <h1>4. feladat: Szindróma dekódolás</h1>
+    
+    <div class="task-box">
+        <h2>Eredeti feladat</h2>
+        <p>Szindróma dekódolás segítségével határozza meg a megadott v vett szavakhoz tartozó c kódokat!</p>
+        
+        <div class="matrix-container">
+            <span>H<sup>T</sup> = </span>
+            <div class="matrix">
+                <table>
+                    <tr><td>1</td><td>1</td><td>0</td></tr>
+                    <tr><td>1</td><td>0</td><td>1</td></tr>
+                    <tr><td>1</td><td>0</td><td>0</td></tr>
+                    <tr><td>0</td><td>1</td><td>0</td></tr>
+                    <tr><td>0</td><td>0</td><td>1</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <p><strong>Szindróma-táblázat (példa):</strong></p>
+        <table class="syndrome-table">
+            <tr><th>Szindróma (s)</th><th>Hiba (e)</th></tr>
+            <tr><td>000</td><td>00000</td></tr>
+            <tr><td>110</td><td>10000</td></tr>
+            <tr><td>101</td><td>01000</td></tr>
+            <tr><td>100</td><td>00100</td></tr>
+            <tr><td>010</td><td>00010</td></tr>
+            <tr><td>001</td><td>00001</td></tr>
+        </table>
+    </div>
+
+    <div class="logic-box">
+        <h2>Megoldás menete (Logika)</h2>
+        <ol>
+            <li><strong>Szindróma kiszámítása:</strong> Szorozd meg a vett szót (v) a paritásellenőrző mátrix transzponáltjával (H^T). <br>
+                <code>s = v * H^T</code> (mod 2 összeadás, azaz XOR).</li>
+            <li><strong>Hiba keresése:</strong> Keresd meg a kiszámolt szindrómát (s) a megadott táblázatban. A hozzá tartozó vektor az <strong>e</strong> hiba-vektor (mellékosztályvezető).</li>
+            <li><strong>Kódszó visszaállítása:</strong> Add hozzá a hiba-vektort a vett szóhoz. <br>
+                <code>c = v + e</code> (binárisan ez ugyanaz, mintha ahol az e-ben 1-es van, ott megfordítanád a v bitjét).</li>
+        </ol>
+    </div>
+
+    <div class="generic-box">
+        <h2>Felkészülés más számokra</h2>
+        <p>Ha a mátrix vagy a vett szavak változnak:</p>
+        <ul>
+            <li>A mátrixszorzásnál figyelj: 1*1=1, 1+1=0 (bináris test).</li>
+            <li>Ha a szindróma 000, akkor nincs hiba, a vett szó maga a kódszó.</li>
+            <li>Mindig ellenőrizd, hogy a kapott <code>c</code> kódszóra igaz-e, hogy <code>c * H^T = 0</code>.</li>
+        </ul>
+    </div>
+</body>
+</html>
