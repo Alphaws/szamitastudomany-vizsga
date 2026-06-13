@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1. feladat: Dijkstra algoritmus</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
         h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
         h2 { color: #2980b9; margin-top: 30px; }
         .task-box { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
         .logic-box { background-color: #e8f4fd; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #2980b9; }
+        .step-by-step { background-color: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #ddd; }
         .generic-box { background-color: #fdf2e9; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #e67e22; }
-        .diagram-box { background-color: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; border: 1px solid #ddd; }
-        code { background-color: #eee; padding: 2px 5px; border-radius: 4px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; font-size: 0.9em; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
         th { background-color: #3498db; color: white; }
+        .highlight { background-color: #fff9c4; font-weight: bold; }
+        .fixed { background-color: #e2f3f5; color: #777; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true});</script>
@@ -33,13 +34,82 @@
         </div>
     </div>
 
+    <div class="step-by-step">
+        <h2>Táblázat kitöltése lépésről lépésre (F-ből indulva)</h2>
+        <p>A Dijkstra táblázatban minden sor egy "fixált" csúcsot jelent. Mindig a legkisebb aktuális értékkel rendelkező csúcsot választjuk ki.</p>
+        
+        <table>
+            <tr><th>Lépés</th><th>Választott</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>G</th><th>H</th><th>J</th><th>Magyarázat</th></tr>
+            <tr>
+                <td>0.</td>
+                <td>-</td>
+                <td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td>
+                <td>Kezdetben minden végtelen, az F értéke 0.</td>
+            </tr>
+            <tr>
+                <td>1.</td>
+                <td><b>F (0)</b></td>
+                <td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td class="highlight">11</td><td class="highlight">12</td><td>&infin;</td><td class="highlight">10</td>
+                <td>F-ből elérhető: E(11), G(12), J(10).</td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td><b>J (10)</b></td>
+                <td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td class="fixed">11</td><td>12</td><td class="highlight">22</td><td class="fixed">10</td>
+                <td>J-ből a H távolsága: 10+12=22.</td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td><b>E (11)</b></td>
+                <td>&infin;</td><td>&infin;</td><td class="highlight">17</td><td class="highlight">18</td><td class="fixed">11</td><td>12</td><td class="highlight">20</td><td class="fixed">10</td>
+                <td>E-ből: C(11+6=17), D(11+7=18), H javul(11+9=20).</td>
+            </tr>
+            <tr>
+                <td>4.</td>
+                <td><b>G (12)</b></td>
+                <td>&infin;</td><td>&infin;</td><td class="highlight">15</td><td class="fixed">18</td><td class="fixed">11</td><td class="fixed">12</td><td>20</td><td class="fixed">10</td>
+                <td>G-ből: C javul(12+3=15).</td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td><b>C (15)</b></td>
+                <td class="highlight">22</td><td class="highlight">24</td><td class="fixed">15</td><td class="fixed">18</td><td class="fixed">11</td><td class="fixed">12</td><td>20</td><td class="fixed">10</td>
+                <td>C-ből: A(15+7=22), B(15+9=24). D(15+5=20) nem javít a 18-on.</td>
+            </tr>
+            <tr>
+                <td>6.</td>
+                <td><b>D (18)</b></td>
+                <td class="fixed">22</td><td>24</td><td class="fixed">15</td><td class="fixed">18</td><td class="fixed">11</td><td class="fixed">12</td><td>20</td><td class="fixed">10</td>
+                <td>D-ből az A(18+6=24) nem javít a 22-n.</td>
+            </tr>
+            <tr>
+                <td>7.</td>
+                <td><b>H (20)</b></td>
+                <td class="fixed">22</td><td class="highlight">24</td><td class="fixed">15</td><td class="fixed">18</td><td class="fixed">11</td><td class="fixed">12</td><td class="fixed">20</td><td class="fixed">10</td>
+                <td>H-ból a B(20+9=29) nem javít a 24-en.</td>
+            </tr>
+            <tr>
+                <td>8.</td>
+                <td><b>A (22)</b></td>
+                <td class="fixed">22</td><td class="fixed">24</td><td class="fixed">15</td><td class="fixed">18</td><td class="fixed">11</td><td class="fixed">12</td><td class="fixed">20</td><td class="fixed">10</td>
+                <td>A-ból a B(22+11=33) nem javít a 24-en.</td>
+            </tr>
+            <tr>
+                <td>9.</td>
+                <td><b>B (24)</b></td>
+                <td class="fixed">22</td><td class="fixed">24</td><td class="fixed">15</td><td class="fixed">18</td><td class="fixed">11</td><td class="fixed">12</td><td class="fixed">20</td><td class="fixed">10</td>
+                <td>Minden csúcs kész.</td>
+            </tr>
+        </table>
+    </div>
+
     <div class="logic-box">
         <h2>Megoldás menete (Logika)</h2>
         <ol>
             <li><strong>Inicializálás:</strong> Készítsünk egy táblázatot az összes csúccsal. A kezdőponthoz (F) írjunk 0-t, az összes többihez végtelent (∞).</li>
-            <li><strong>Kiválasztás:</strong> Válaszd ki a legkisebb értékű, még nem rögzített csúcsot. Első körben ez az F (0).</li>
+            <li><strong>Kiválasztás:</strong> Válaszd ki a legkisebb értékű, még nem rögzített csúcsot.</li>
             <li><strong>Frissítés (Relaxáció):</strong> Nézd meg az aktuális csúcs összes szomszédját. Ha az aktuális csúcs értéke + az él súlya kisebb, mint a szomszéd jelenlegi értéke, írd be az új, kisebb értéket.</li>
-            <li><strong>Ismétlés:</strong> Jelöld meg az aktuális csúcsot véglegesnek, és térj vissza a 2. lépéshez, amíg minden elérhető csúcsot nem rögzítettél.</li>
+            <li><strong>Ismétlés:</strong> Jelöld meg az aktuális csúcsot véglegesnek, és térj vissza a 2. lépéshez.</li>
         </ol>
     </div>
 
@@ -48,8 +118,8 @@
         <p>Ha a gráf vagy a súlyok változnak, a módszer ugyanaz marad:</p>
         <ul>
             <li>Mindig a <strong>legkisebb aktuális költségű</strong> csúcsot vizsgáld meg legközelebb.</li>
-            <li>A táblázatban mindig csak akkor írj át értéket, ha az <strong>új út rövidebb</strong>, mint amit eddig ismertél.</li>
-            <li>Figyelj arra, hogy ha egy csúcsot már rögzítettél (kiválasztottad legkisebbként), annak az értéke már nem fog változni.</li>
+            <li>A táblázatban mindig csak akkor írj át értéket, ha az <strong>új út rövidebb</strong>.</li>
+            <li>Figyelj arra, hogy ha egy csúcsot már rögzítettél, annak az értéke már nem fog változni.</li>
         </ul>
     </div>
 </body>
