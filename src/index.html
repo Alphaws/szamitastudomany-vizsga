@@ -3,253 +3,423 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Számítástudomány alapjai 2 - Vizsgafelkészítő</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Számítástudomány Hub - Tudás, Innováció, Algoritmusok</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #3498db;
-            --primary-dark: #2980b9;
-            --secondary: #27ae60;
-            --dark: #2c3e50;
-            --light: #f4f7f6;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
             --white: #ffffff;
-            --text: #333;
-            --gray: #7f8c8d;
+            --text-main: #334155;
+            --text-muted: #64748b;
         }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Inter', sans-serif; 
             line-height: 1.6; 
-            color: var(--text); 
+            color: var(--text-main); 
             background-color: var(--light);
-            padding-bottom: 50px;
+            overflow-x: hidden;
         }
 
-        header {
-            background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%);
-            color: var(--white);
-            padding: 80px 20px;
-            text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-            margin-bottom: 50px;
+        /* --- Navigation --- */
+        nav {
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-
-        header h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 700px;
+        .nav-container {
+            max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 0 20px;
         }
-
-        .calculator-promo {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 30px;
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-            border-left: 8px solid var(--secondary);
+            gap: 10px;
         }
-
-        .calculator-promo-text h2 {
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .btn-calc {
-            background-color: var(--secondary);
+        .logo i { color: var(--primary); }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a {
             color: var(--white);
-            padding: 15px 30px;
-            border-radius: 8px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
-        }
-
-        .btn-calc:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
-            background-color: #219150;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-color: var(--primary);
-        }
-
-        .card h3 {
-            color: var(--dark);
-            font-size: 1.25rem;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--light);
-            padding-bottom: 10px;
-        }
-
-        .card p {
+            font-weight: 500;
             font-size: 0.95rem;
-            color: var(--gray);
-            margin-bottom: 20px;
+            transition: color 0.3s;
+            opacity: 0.8;
         }
+        .nav-links a:hover { opacity: 1; color: var(--primary); }
 
-        .btn-view {
-            color: var(--primary);
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+            color: var(--white);
+            padding: 120px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.1;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 20px; letter-spacing: -2px; line-height: 1.1; }
+        .hero p { font-size: 1.3rem; opacity: 0.8; margin-bottom: 40px; font-weight: 300; }
+        .hero-btns { display: flex; justify-content: center; gap: 20px; }
+        .btn {
+            padding: 15px 35px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            transition: color 0.2s;
+            gap: 10px;
+        }
+        .btn-primary { background-color: var(--primary); color: var(--white); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); background-color: var(--primary-dark); }
+        .btn-outline { border: 2px solid rgba(255,255,255,0.2); color: var(--white); }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+
+        /* --- Main Layout --- */
+        .main-container {
+            max-width: 1200px;
+            margin: -60px auto 0;
+            padding: 0 20px 100px;
+            position: relative;
+            z-index: 10;
         }
 
-        .btn-view:hover {
-            color: var(--primary-dark);
+        /* --- Quick Access Cards --- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
         }
-
-        .btn-view::after {
-            content: ' →';
-            margin-left: 5px;
-            transition: transform 0.2s;
-        }
-
-        .btn-view:hover::after {
-            transform: translateX(5px);
-        }
-
-        footer {
-            margin-top: 80px;
+        .feature-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
             text-align: center;
-            color: var(--gray);
-            font-size: 0.9rem;
+            transition: all 0.4s;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
+        .feature-icon {
+            width: 70px; height: 70px;
+            background: var(--light);
+            border-radius: 18px;
+            display: flex;
+            align-items: center; justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        .feature-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--dark); }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; }
+
+        /* --- Content Sections --- */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+        }
+        .section-title h2 { font-size: 2.2rem; font-weight: 800; color: var(--dark); letter-spacing: -1px; }
+        .section-title a { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+
+        /* --- Blog Grid --- */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        .blog-main .article {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+        }
+        .article-img { flex: 1; background: #ddd; min-width: 250px; position: relative; }
+        .article-img img { width: 100%; height: 100%; object-fit: cover; }
+        .article-content { flex: 1.5; padding: 40px; }
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--light);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .article h3 { font-size: 1.8rem; margin-bottom: 15px; line-height: 1.2; color: var(--dark); }
+        .article p { color: var(--text-muted); margin-bottom: 25px; }
+        
+        .sidebar-box {
+            background: var(--dark);
+            color: var(--white);
+            padding: 40px;
+            border-radius: 24px;
+            position: sticky;
+            top: 100px;
+        }
+        .sidebar-box h4 { font-size: 1.4rem; margin-bottom: 20px; }
+        .sidebar-box ul { list-style: none; }
+        .sidebar-box li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sidebar-box li:last-child { border: none; }
+        .sidebar-box i { color: var(--secondary); font-size: 0.8rem; }
+        .sidebar-box a { color: var(--white); text-decoration: none; opacity: 0.8; transition: 0.3s; font-size: 0.95rem; }
+        .sidebar-box a:hover { opacity: 1; padding-left: 5px; }
+
+        /* --- Code Snippet Section --- */
+        .code-preview {
+            background: #1e1e2e;
+            padding: 40px;
+            border-radius: 24px;
+            margin: 80px 0;
+            color: #cdd6f4;
+            font-family: 'Fira Code', monospace;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .code-header {
+            position: absolute;
+            top: 15px; left: 20px;
+            display: flex; gap: 8px;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+        .code-preview pre { font-size: 1.1rem; line-height: 1.5; }
+        .keyword { color: #c678dd; }
+        .function { color: #61afef; }
+        .string { color: #98c379; }
+
+        footer.site-footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 0 40px;
+            margin-top: 100px;
+        }
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 80px;
+            padding: 0 20px;
+            margin-bottom: 60px;
+        }
+        .footer-col h5 { font-size: 1.2rem; margin-bottom: 25px; }
+        .footer-col p { opacity: 0.6; font-size: 0.9rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a { color: var(--white); opacity: 0.6; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { opacity: 1; color: var(--primary); }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.4;
         }
 
-        @media (max-width: 600px) {
-            header h1 { font-size: 2rem; }
-            .calculator-promo { flex-direction: column; text-align: center; gap: 20px; }
+        @media (max-width: 900px) {
+            .features { grid-template-columns: 1fr; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .article { flex-direction: column; }
+            .article-img { height: 200px; }
+            .hero h1 { font-size: 2.8rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Számítástudomány alapjai 2</h1>
-            <p>Szakmai vizsgafelkészítő portál kidolgozott feladatokkal, ábrákkal és interaktív segédeszközökkel.</p>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo"><i class="fas fa-terminal"></i> CS HUB</a>
+            <ul class="nav-links">
+                <li><a href="#articles">Blog</a></li>
+                <li><a href="dijkstra_kalkulator.html">Kalkulátor</a></li>
+                <li><a href="vizsga.html">Vizsgafeladatok</a></li>
+                <li><a href="#contact">Kapcsolat</a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
-    <div class="container">
-        <div class="calculator-promo">
-            <div class="calculator-promo-text">
-                <h2>Interaktív Dijkstra Kalkulátor</h2>
-                <p>Építsd fel a saját gráfodat, és nézd végig az algoritmus lépéseit!</p>
-            </div>
-            <a href="dijkstra_kalkulator.html" class="btn-calc">Kalkulátor Megnyitása</a>
-        </div>
-
-        <div class="grid">
-            <div class="card">
-                <div>
-                    <h3>1. Dijkstra algoritmus</h3>
-                    <p>Legrövidebb utak keresése súlyozott gráfban. Módszertan és eredeti vizsgafeladat.</p>
-                </div>
-                <a href="feladat_1_dijkstra.html" class="btn-view">Megnyitás</a>
-            </div>
-
-            <div class="card">
-                <div>
-                    <h3>2. Huffman kódolás</h3>
-                    <p>Optimális prefix kódok előállítása statisztikai adatok alapján, fa-reprezentációval.</p>
-                </div>
-                <a href="feladat_2_huffman.html" class="btn-view">Megnyitás</a>
-            </div>
-
-            <div class="card">
-                <div>
-                    <h3>3. NFA -> DFA konverzió</h3>
-                    <p>Nemdeterminisztikus véges automaták determinisztikussá tétele részhalmaz-konstrukcióval.</p>
-                </div>
-                <a href="feladat_3_nfa_dfa.html" class="btn-view">Megnyitás</a>
-            </div>
-
-            <div class="card">
-                <div>
-                    <h3>4. Szindróma dekódolás</h3>
-                    <p>Hibajavító kódok dekódolása paritásellenőrző mátrix és szindróma táblázat segítségével.</p>
-                </div>
-                <a href="feladat_4_szindroma.html" class="btn-view">Megnyitás</a>
-            </div>
-
-            <div class="card">
-                <div>
-                    <h3>5. Hill-rejtjelező</h3>
-                    <p>Mátrixműveletek és inverz számítás modulo 26 gyűrű felett a titkosításban.</p>
-                </div>
-                <a href="feladat_5_hill_inverz.html" class="btn-view">Megnyitás</a>
-            </div>
-
-            <div class="card">
-                <div>
-                    <h3>6. MDS kód paraméterei</h3>
-                    <p>Maximális távolságú kódok hibajavító és hibaérzékelő képességének elemzése.</p>
-                </div>
-                <a href="feladat_6_mds_kod.html" class="btn-view">Megnyitás</a>
-            </div>
-
-            <div class="card">
-                <div>
-                    <h3>7. Lineáris és Duális kód</h3>
-                    <p>Generátormátrixok, paritásellenőrzők és a duális kódtér összefüggései.</p>
-                </div>
-                <a href="feladat_7_dualis_kod.html" class="btn-view">Megnyitás</a>
-            </div>
-
-            <div class="card">
-                <div>
-                    <h3>8. Nyelvtanból automata</h3>
-                    <p>Jobbreguláris nyelvtanok szabályainak átírása véges automata állapotátmeneteire.</p>
-                </div>
-                <a href="feladat_8_nyelvtan_automata.html" class="btn-view">Megnyitás</a>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="tag" style="background: rgba(99,102,241,0.2); color: #a5b4fc; margin-bottom: 20px;">v2.0 Beta</span>
+            <h1>Fedezd fel a Számítástudomány Világát</h1>
+            <p>Mélyedj el az algoritmusok, az adatstruktúrák és a modern technológiák lenyűgöző univerzumában.</p>
+            <div class="hero-btns">
+                <a href="vizsga.html" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> Vizsgafelkészítő</a>
+                <a href="#articles" class="btn btn-outline">Legfrissebb írások</a>
             </div>
         </div>
+    </section>
 
-        <footer>
-            <p>&copy; 2026 Milton Friedman Egyetem - Számítástudomány Felkészítő Portál</p>
-        </footer>
+    <div class="main-container">
+        
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-microchip"></i></div>
+                <h3>Elméleti Alapok</h3>
+                <p>Nyelvtanok, automaták és a számításelmélet fundamentumai egyszerűen magyarázva.</p>
+                <a href="#" class="btn-view">Olvasás</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+                <h3>Algoritmusok</h3>
+                <p>A Dijkstra-tól a dinamikus programozásig. Hatékonyság és implementáció.</p>
+                <a href="dijkstra_kalkulator.html" class="btn-view">Kalkulátor</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3>Kriptográfia</h3>
+                <p>Hogyan működik a modern titkosítás? Hill-rejtjelezőtől a kvantumbiztos kódokig.</p>
+                <a href="#" class="btn-view">Tanulmányozás</a>
+            </div>
+        </section>
+
+        <section id="articles">
+            <div class="section-title">
+                <h2>Friss Bejegyzések</h2>
+                <a href="#">Összes cikk megnyitása</a>
+            </div>
+            
+            <div class="blog-grid">
+                <div class="blog-main">
+                    <div class="article">
+                        <div class="article-img">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800" alt="Code">
+                        </div>
+                        <div class="article-content">
+                            <span class="tag">Algoritmusok</span>
+                            <h3>Miért a Dijkstra a leghatékonyabb?</h3>
+                            <p>Ebben a bejegyzésben körbejárjuk a legrövidebb útkeresés matematikáját és megnézzük, miért használják még ma is a Google Maps-ben.</p>
+                            <a href="feladat_1_dijkstra.html" class="btn-view">Részletek</a>
+                        </div>
+                    </div>
+
+                    <div class="article">
+                        <div class="article-img">
+                            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800" alt="Math">
+                        </div>
+                        <div class="article-content">
+                            <span class="tag">Kódoláselmélet</span>
+                            <h3>Huffman: A tömörítés művészete</h3>
+                            <p>Hogyan tudunk adatot veszíteni nélkül méretet csökkenteni? A Huffman-kódolás vizuális bemutatása és előnyei.</p>
+                            <a href="feladat_2_huffman.html" class="btn-view">Részletek</a>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="sidebar">
+                    <div class="sidebar-box">
+                        <h4>Vizsga Segédlet</h4>
+                        <p style="font-size: 0.85rem; opacity: 0.6; margin-bottom: 20px;">Gyors elérés a legutóbbi vizsgafeladatokhoz és részletes megoldásaikhoz.</p>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> <a href="feladat_3_nfa_dfa.html">NFA to DFA konverzió</a></li>
+                            <li><i class="fas fa-chevron-right"></i> <a href="feladat_4_szindroma.html">Szindróma dekódolás</a></li>
+                            <li><i class="fas fa-chevron-right"></i> <a href="feladat_5_hill_inverz.html">Hill-mátrix inverz</a></li>
+                            <li><i class="fas fa-chevron-right"></i> <a href="feladat_6_mds_kod.html">MDS kód tulajdonságok</a></li>
+                        </ul>
+                        <a href="vizsga.html" class="btn btn-primary" style="margin-top: 30px; width: 100%; justify-content: center; padding: 12px;">Összes feladat</a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="code-preview">
+            <div class="code-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <pre>
+<span class="keyword">function</span> <span class="function">dijkstra</span>(graph, start) {
+  <span class="keyword">let</span> distances = {};
+  <span class="keyword">let</span> visited = <span class="keyword">new</span> <span class="function">Set</span>();
+  
+  <span class="comment">// A számítástudomány szépsége a logikában rejlik.</span>
+  <span class="keyword">for</span> (<span class="keyword">let</span> node <span class="keyword">in</span> graph) {
+    distances[node] = <span class="function">Infinity</span>;
+  }
+  distances[start] = <span class="string">0</span>;
+  
+  <span class="comment">// Az algoritmus futása...</span>
+  <span class="keyword">return</span> distances;
+}</pre>
+        </section>
+
     </div>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h5>CS HUB</h5>
+                <p>A számítástudomány mindenkié. Célunk a komplex elméleti összefüggések közérthető, vizuális és interaktív bemutatása.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Linkek</h5>
+                <ul>
+                    <li><a href="vizsga.html">Vizsgafelkészítő</a></li>
+                    <li><a href="dijkstra_kalkulator.html">Algoritmus kalkulátor</a></li>
+                    <li><a href="#">Blog bejegyzések</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Közösség</h5>
+                <ul>
+                    <li><a href="https://github.com/Alphaws/szamitastudomany-vizsga">GitHub Repo</a></li>
+                    <li><a href="#">Milton Friedman Egyetem</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CS HUB | Minden jog fenntartva.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
