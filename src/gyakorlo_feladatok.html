@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Számítástudomány - Életszerű Gyakorlófeladatok</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.5; color: #333; margin: 0; padding: 20px; background-color: #fff; max-width: 900px; margin: 0 auto; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px; text-align: center; font-size: 1.8em; margin: 20px 0; }
+        h2 { color: #2980b9; margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 3px; font-size: 1.4em; }
+        .scenario-box { background-color: #fdf2e9; padding: 15px; border-left: 5px solid #e67e22; margin-bottom: 15px; border-radius: 4px; }
+        .task-box { background-color: #f8f9fa; padding: 15px; border-left: 5px solid #3498db; margin-bottom: 25px; border-radius: 4px; }
+        .challenge { font-weight: bold; color: #c0392b; margin-top: 10px; display: block; }
+        @media print {
+            body { max-width: 100%; padding: 0; }
+            .scenario-box, .task-box { border: 1px solid #ddd; border-left: 5px solid #333; background-color: transparent !important; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Számítástudomány az Iparban - Gyakorlófeladatsor</h1>
+    <p style="text-align: center; font-style: italic;">A vizsgafeladatokhoz hasonló, de valós ipari szituációkra épülő gyakorlópéldák.</p>
+
+    <!-- 1. Feladat: Dijkstra -->
+    <div>
+        <h2>1. feladat: Dijkstra algoritmus (Logisztika és Útvonaltervezés)</h2>
+        <div class="scenario-box">
+            <strong>Szituáció:</strong> A Wolt/Foodora futárrendszerében dolgozol. Egy futárnak (F csúcs) az étteremből kell eljutnia egy megrendelőhöz a belvárosban. A város utcáit egy gráf modellezi, ahol az élek az utcák, a súlyok pedig az aktuális forgalmi dugók alapján számított percek.
+        </div>
+        <div class="task-box">
+            <strong>Feladat:</strong> Adott a térkép (gráf) a következő percekkel: F-ből elérhető az Andrássy út (A, 8 perc) és a Bajcsy-Zsilinszky (B, 5 perc). B-ből elérhető a Deák tér (D, 3 perc) és az Oktogon (O, 6 perc). A-ból elérhető az Oktogon (O, 2 perc). <br>
+            <span class="challenge">Építsd fel a Dijkstra táblázatot F-ből kiindulva, és határozd meg a leggyorsabb utat az Oktogonig (O)! Cseréld fel a "költséget" a valós "idő" fogalmára.</span>
+        </div>
+    </div>
+
+    <!-- 2. Feladat: Huffman -->
+    <div>
+        <h2>2. feladat: Huffman kódolás (Adattömörítés a Messengerben)</h2>
+        <div class="scenario-box">
+            <strong>Szituáció:</strong> Egy chat alkalmazás (pl. WhatsApp) fejlesztője vagy. A cél az elküldött üzenetek hálózati forgalmának (adatkeretének) csökkentése. Megfigyeltétek, hogy a magyar nyelvű üzenetekben bizonyos karakterek sokkal gyakrabban fordulnak elő.
+        </div>
+        <div class="task-box">
+            <strong>Feladat:</strong> Egy tipikus "Szia mizu?" jellegű üzenetmintában az előfordulások: E(12), A(10), I(8), Z(4), U(2). Készítsd el erre a mintára a Huffman-fát!<br>
+            <span class="challenge">Határozd meg a kódokat, és számold ki, hány bitet spórol a szerver ezzel a módszerrel ahhoz képest, mintha minden karaktert fix 3 biten tárolna (mivel 5 féle karakter van).</span>
+        </div>
+    </div>
+
+    <!-- 3. Feladat: NFA-DFA -->
+    <div>
+        <h2>3. feladat: NFA -> DFA konverzió (Bankautomata Állapotgép)</h2>
+        <div class="scenario-box">
+            <strong>Szituáció:</strong> Egy bankautomata (ATM) szoftverét írod. A felhasználó gombnyomásait (PIN beírása, Összeg megadása, Jóváhagyás) egy állapotgép kezeli. Egy junior fejlesztő véletlenül egy Nemdeterminisztikus (NFA) tervet adott át, ahol a "Jóváhagyás" gomb lenyomása ('j' esemény) a hálózat állapotától függően a "Pénzkiadás" (P) vagy a "Hiba" (H) állapotba is viheti a gépet egyidejűleg.
+        </div>
+        <div class="task-box">
+            <strong>Feladat:</strong> A determinisztikus (DFA) vezérlőszoftver megírásához alakítsd át a modellt. <br>
+            Alapállapot (S). 'p' (pin) jelre: A-ba megy. 'o' (összeg) jelre: A-ból B-be megy. 'j' (jóváhagyás) jelre B-ből {P, H} állapotokba visz az NFA.<br>
+            <span class="challenge">Írd fel a részhalmaz-konstrukciós táblázatot! Mi lesz a DFA végső "állapot-részhalmaza", ami lekezeli ezt a hálózati aszinkronitást?</span>
+        </div>
+    </div>
+
+    <!-- 4. Feladat: Szindróma -->
+    <div>
+        <h2>4. feladat: Szindróma dekódolás (Műholdas Adatátvitel)</h2>
+        <div class="scenario-box">
+            <strong>Szituáció:</strong> A SpaceX egyik mérnökeként a Starlink műholdak és a földi állomások közötti csomagvesztéseket kezeled. A kozmikus sugárzás miatt a bitek néha átbillenek (1-ből 0 lesz). Hibajavító kódokat használtok, hogy a földi állomás automatikusan korrigálja az 1 bites hibákat anélkül, hogy újra kéne kérni a csomagot.
+        </div>
+        <div class="task-box">
+            <strong>Feladat:</strong> A földi állomás befogad egy csomagot: v = 11011. A beépített hardveres paritásmátrix (H^T) sorai: (100), (010), (001), (110), (101).<br>
+            <span class="challenge">Végezd el a Szindróma számítást (XOR műveletek)! Ha a kapott szindróma pl. 011, az a 2. bit hibáját jelenti. Találd meg, hol billent át a bit, és írd fel a javított (eredeti) műholdas üzenetet!</span>
+        </div>
+    </div>
+
+    <!-- 5. Feladat: Hill -->
+    <div>
+        <h2>5. feladat: Hill-rejtjelező (Legacy Banki Adatbázis Titkosítás)</h2>
+        <div class="scenario-box">
+            <strong>Szituáció:</strong> Egy régi, 1990-es évekbeli banki adatbázist kell modernizálnod. A jelszavakat egy régi Hill-rejtjelező algoritmus titkosította egy 2x2-es mátrixszal. Ahhoz, hogy migrálni tudd a jelszavakat az új bcrypt alapú rendszerbe, először dekódolnod kell őket, amihez meg kell találnod a titkosító mátrix inverzét.
+        </div>
+        <div class="task-box">
+            <strong>Feladat:</strong> A régi forráskódban megtaláltad a titkosító mátrixot: A = [5 8; 17 3]. A rendszer az angol ábécé 26 betűjét (mod 26) használta.<br>
+            <span class="challenge">Számítsd ki a dekódoló mátrixot (A inverzét mod 26)! Keresd meg a determinánst, annak multiplikatív inverzét, majd szorozd be vele az adjungált mátrixot.</span>
+        </div>
+    </div>
+
+    <!-- 6-7. Feladat: MDS és Duális -->
+    <div>
+        <h2>6-7. feladat: MDS és Duális kódok (RAID SSD Adattárolás)</h2>
+        <div class="scenario-box">
+            <strong>Szituáció:</strong> Egy adatközpontban dolgozol, ahol az új szerverek adattárolását (RAID 6 szerű rendszer) tervezed. A szerverek adatait feldaraboljátok (k=4) és extra paritás-szerverekre (n=7) mentitek, így jön létre egy C(7, 4) paraméterű kód. A cél, hogy ha egy SSD meghibásodik, az adatok azonnal helyreállíthatóak legyenek.
+        </div>
+        <div class="task-box">
+            <strong>Feladat:</strong> 
+            1. Határozd meg, hogy egy C(7,4) MDS kód esetén maximum hány SSD (hiba) eshet ki úgy, hogy a rendszer még garantáltan javítani tudja az adatokat!<br>
+            2. A redundanciát generáló áramkör a Duális Kódtér generátormátrixát (G') használja. Ha az eredeti mátrix "P" része a [1 1 0; 0 1 1; 1 0 1; 1 1 1], állítsd össze a G' mátrixot a hardveres implementációhoz!
+        </div>
+    </div>
+
+    <!-- 8. Feladat: Nyelvtan -->
+    <div>
+        <h2>8. feladat: Nyelvtanból automata (Terminál Parancs Értelmező)</h2>
+        <div class="scenario-box">
+            <strong>Szituáció:</strong> Egy saját fejlesztésű CLI (Command Line Interface) eszközt írsz (mint pl. a Docker vagy a Git). A parancssori argumentumok feldolgozóját (Parser) egy jobbreguláris nyelvtan írja le. A gyors futás érdekében ezt a nyelvtant egy véges állapotgéppé (DFA/NFA) fordítod le, ami karakterről karakterre olvassa a felhasználó parancsait.
+        </div>
+        <div class="task-box">
+            <strong>Feladat:</strong> A parancs (pl. 'run' vagy 'rm') szintaktikája: S -> rU | rM; U -> uN; N -> nE; M -> mE; E -> (üres/elfogadó).<br>
+            <span class="challenge">Rajzold fel az automatát (vagy írd fel a táblázatot), amely eldönti egy beírt szóról, hogy az érvényes parancs-e! Mik lesznek az állapotok és mik az átmeneti feltételek (bemenetek)?</span>
+        </div>
+    </div>
+
+</body>
+</html>

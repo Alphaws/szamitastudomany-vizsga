@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Számítástudomány 2 - Dolgozat Megoldások</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.5; color: #333; margin: 0; padding: 10px; background-color: #fff; }
+        h1 { color: #000; border-bottom: 1px solid #000; padding-bottom: 5px; text-align: center; font-size: 1.6em; margin: 10px 0; }
+        h2 { color: #000; margin-top: 20px; border-bottom: 1px solid #eee; padding-bottom: 3px; font-size: 1.3em; }
+        h3 { color: #000; margin-top: 15px; font-size: 1.1em; }
+        .task-container { margin-bottom: 25px; page-break-inside: avoid; border-bottom: 1px dashed #ccc; padding-bottom: 15px; }
+        .task-container:last-child { border-bottom: none; }
+        .logic { padding: 5px 0; margin-bottom: 10px; font-size: 0.9em; }
+        .solution { padding: 5px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.9em; }
+        th, td { border: 1px solid #000; padding: 5px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        code { font-family: monospace; font-weight: bold; border: 1px solid #ddd; padding: 0 2px; }
+        .matrix { display: inline-block; vertical-align: middle; padding: 0; margin: 0 5px; }
+        .matrix table { width: auto; margin: 0; }
+        .matrix td { padding: 2px 6px; }
+        p { margin: 5px 0; }
+        @media print {
+            body { padding: 0; margin: 0; width: 100%; }
+            .task-container { page-break-inside: avoid; margin-bottom: 15px; padding-bottom: 10px; }
+            .logic, .solution { border: none; background-color: transparent !important; }
+            h1, h2, h3 { color: #000; }
+        }
+    </style>
+</head>
+<body>
+
+<!--    <h1>Számítástudomány 2 - Dolgozat Megoldókulcs</h1>-->
+<!--    <p style="text-align: center; font-style: italic;">Nyomtatásra optimalizált, magyarázatokkal ellátott megoldások</p>-->
+
+    <!-- 1. Feladat -->
+    <div class="task-container">
+        <h2>1. feladat: Dijkstra algoritmus</h2>
+        <p><strong>Feladat:</strong> Határozza meg a Dijkstra algoritmus segítségével az F csúcsból az összes csúcsba a legolcsóbb utak költségeit!</p>
+        <div class="logic">
+            <strong>Megoldás menete:</strong>
+            <ol>
+                <li>Kezdőpont (F) távolsága 0, a többié ∞ (végtelen).</li>
+                <li>Válasszuk ki a legkisebb távolságú, még nem rögzített csúcsot.</li>
+                <li>Relaxáció: ha az aktuális távolság + az él súlya kisebb a szomszéd eddigi távolságánál, írjuk felül.</li>
+            </ol>
+        </div>
+        <div class="solution">
+            <strong>Dijkstra táblázat (F-ből indulva):</strong>
+            <table>
+                <thead>
+                    <tr><th>Választott</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>G</th><th>H</th><th>J</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>-</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
+                    <tr><td><strong>F (0)</strong></td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>11</td><td>12</td><td>∞</td><td>10</td></tr>
+                    <tr><td><strong>J (10)</strong></td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>11</td><td>12</td><td>22</td><td><span style="text-decoration: underline;">10</span></td></tr>
+                    <tr><td><strong>E (11)</strong></td><td>∞</td><td>∞</td><td>17</td><td>18</td><td><span style="text-decoration: underline;">11</span></td><td>12</td><td>20</td><td>10</td></tr>
+                    <tr><td><strong>G (12)</strong></td><td>∞</td><td>∞</td><td>15</td><td>18</td><td>11</td><td><span style="text-decoration: underline;">12</span></td><td>20</td><td>10</td></tr>
+                    <tr><td><strong>C (15)</strong></td><td>22</td><td>24</td><td><span style="text-decoration: underline;">15</span></td><td>18</td><td>11</td><td>12</td><td>20</td><td>10</td></tr>
+                    <tr><td><strong>D (18)</strong></td><td>22</td><td>24</td><td>15</td><td><span style="text-decoration: underline;">18</span></td><td>11</td><td>12</td><td>20</td><td>10</td></tr>
+                    <tr><td><strong>H (20)</strong></td><td>22</td><td>24</td><td>15</td><td>18</td><td>11</td><td>12</td><td><span style="text-decoration: underline;">20</span></td><td>10</td></tr>
+                    <tr><td><strong>A (22)</strong></td><td><span style="text-decoration: underline;">22</span></td><td>24</td><td>15</td><td>18</td><td>11</td><td>12</td><td>20</td><td>10</td></tr>
+                    <tr><td><strong>B (24)</strong></td><td>22</td><td><span style="text-decoration: underline;">24</span></td><td>15</td><td>18</td><td>11</td><td>12</td><td>20</td><td>10</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Végeredmény (költségek F-ből):</strong> A: 22, B: 24, C: 15, D: 18, E: 11, G: 12, H: 20, J: 10.</p>
+        </div>
+    </div>
+
+    <!-- 2. Feladat -->
+    <div class="task-container">
+        <h2>2. feladat: Huffman kódolás</h2>
+        <p><strong>Feladat:</strong> A:4, B:5, C:3, D:2, E:5. Huffman kódok és bitek száma.</p>
+        <div class="logic">
+            <strong>Megoldás menete:</strong> Mindig a két legkisebb gyakoriságút vonjuk össze.
+        </div>
+        <div class="solution">
+            <strong>Huffman-fa felépítésének lépései:</strong><br>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px;">
+                <div style="border: 1px solid #ccc; padding: 10px; background: #fff;">
+                    <em>Kezdetben:</em><br>
+                    <pre style="font-family: monospace; line-height: 1.2; margin: 0;">
+D:2  C:3  A:4  B:5  E:5
+                    </pre>
+                </div>
+                <div style="border: 1px solid #ccc; padding: 10px; background: #fff;">
+                    <em>1. lépés: D(2)+C(3)=5</em><br>
+                    <pre style="font-family: monospace; line-height: 1.2; margin: 0;">
+  (5)
+  / \
+D:2 C:3  A:4  B:5  E:5
+                    </pre>
+                </div>
+                <div style="border: 1px solid #ccc; padding: 10px; background: #fff;">
+                    <em>2. lépés: A(4)+5=9</em><br>
+                    <pre style="font-family: monospace; line-height: 1.2; margin: 0;">
+    (9)
+    / \
+  A:4 (5)
+      / \
+    D:2 C:3  B:5  E:5
+                    </pre>
+                </div>
+                <div style="border: 1px solid #ccc; padding: 10px; background: #fff;">
+                    <em>3. lépés: B(5)+E(5)=10</em><br>
+                    <pre style="font-family: monospace; line-height: 1.2; margin: 0;">
+    (9)         (10)
+    / \         /  \
+  A:4 (5)     B:5  E:5
+      / \
+    D:2 C:3
+                    </pre>
+                </div>
+            </div>
+            <strong>4. lépés (Végső fa kódokkal): 9+10=19</strong><br>
+            <pre style="font-family: monospace; line-height: 1.2; border: 1px solid #ccc; padding: 10px; display: inline-block; background: #fff;">
+      (19)
+     /    \
+   0/      \1
+  (9)      (10)
+  / \      /  \
+0/  \1   0/    \1
+A:4 (5) B:5   E:5
+    / \
+  0/   \1
+ D:2   C:3
+            </pre><br>
+            <strong>Kódok:</strong> A: <code>00</code>, D: <code>010</code>, C: <code>011</code>, B: <code>10</code>, E: <code>11</code>.<br>
+            <strong>Bitek száma Huffman-nal:</strong> 4*2 + 2*3 + 3*3 + 5*2 + 5*2 = 8+6+9+10+10 = <strong>43 bit</strong>.<br>
+            <strong>Bitek száma kód nélkül:</strong> 19 betű * 3 bit = <strong>57 bit</strong>.
+        </div>
+    </div>
+
+    <!-- 3. Feladat -->
+    <div class="task-container">
+        <h2>3. feladat: NFA -> DFA konverzió</h2>
+        <p><strong>Feladat:</strong> Adja meg az eredeti NFA és az új, teljesen definiált DFA mozgástáblázatát!</p>
+        
+        <div class="solution">
+            <h3>1. Eredeti NFA mozgástáblázat:</h3>
+            <table>
+                <thead>
+                    <tr><th>Állapot</th><th>'a'</th><th>'b'</th><th>'c'</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>-> S</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C}</td></tr>
+                    <tr><td><strong>A</strong></td><td>-</td><td>-</td><td>{B}</td></tr>
+                    <tr><td><strong>B*</strong></td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td><strong>C</strong></td><td>-</td><td>-</td><td>{B}</td></tr>
+                </tbody>
+            </table>
+
+            <h3>2. Új DFA mozgástáblázat (Részhalmaz-konstrukció):</h3>
+            <table>
+                <thead>
+                    <tr><th>DFA állapot</th><th>'a'</th><th>'b'</th><th>'c'</th><th>Típus</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>-> {S}</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C}</td><td>Kezdő</td></tr>
+                    <tr><td><strong>{S, A}</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C, B}</td><td></td></tr>
+                    <tr><td><strong>{S, C}</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C, B}</td><td></td></tr>
+                    <tr><td><strong>{S, C, B}</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C, B}</td><td>Végállapot</td></tr>
+                </tbody>
+            </table>
+            <p><em>Mivel minden állapothoz minden bemeneti jelre van átmenet, az automata teljesen definiált. (A hiányzó kombinációk, pl. {A, B} nem elérhetőek a kezdőállapotból).</em></p>
+        </div>
+    </div>
+
+    <!-- 4. Feladat -->
+    <div class="task-container">
+        <h2>4. feladat: Szindróma dekódolás</h2>
+        <p><strong>Feladat:</strong> v1=10100, v2=11101, v3=11001 szavak dekódolása.</p>
+        <div class="solution">
+            <p><strong>Számítási elv:</strong> A szindróma <code>s = v * H<sup>T</sup></code>. Bináris esetben ez azt jelenti, hogy összeadjuk (XOR) a H<sup>T</sup> mátrix azon sorait, ahol a <code>v</code> vektorban 1-es áll.</p>
+            
+            <p><strong>H<sup>T</sup> sorai:</strong> r1=(110), r2=(101), r3=(100), r4=(010), r5=(001)</p>
+
+            <h3>1. v1 = 10100 dekódolása:</h3>
+            <ul>
+                <li><strong>Szindróma (s1):</strong> Az 1. és 3. bit 1-es -> r1 + r3 = (110) ⊕ (100) = <strong>010</strong>.</li>
+                <li><strong>Hiba keresése:</strong> A táblázatban 010-hoz tartozó hiba: <code>e1 = 00010</code>.</li>
+                <li><strong>Kódszó (c1):</strong> c1 = v1 ⊕ e1 = 10100 ⊕ 00010 = <strong>10110</strong>.</li>
+            </ul>
+
+            <h3>2. v2 = 11101 dekódolása:</h3>
+            <ul>
+                <li><strong>Szindróma (s2):</strong> Az 1., 2., 3. és 5. bit 1-es -> r1 ⊕ r2 ⊕ r3 ⊕ r5 = (110) ⊕ (101) ⊕ (100) ⊕ (001) = <strong>110</strong>.</li>
+                <li><strong>Hiba keresése:</strong> A táblázatban 110-hoz tartozó hiba: <code>e2 = 10000</code>.</li>
+                <li><strong>Kódszó (c2):</strong> c2 = v2 ⊕ e2 = 11101 ⊕ 10000 = <strong>01101</strong>.</li>
+            </ul>
+
+            <h3>3. v3 = 11001 dekódolása:</h3>
+            <ul>
+                <li><strong>Szindróma (s3):</strong> Az 1., 2. és 5. bit 1-es -> r1 ⊕ r2 ⊕ r5 = (110) ⊕ (101) ⊕ (001) = <strong>010</strong>.</li>
+                <li><strong>Hiba keresése:</strong> A táblázatban 010-hoz tartozó hiba: <code>e3 = 00010</code>.</li>
+                <li><strong>Kódszó (c3):</strong> c3 = v3 ⊕ e3 = 11001 ⊕ 00010 = <strong>11011</strong>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 5. Feladat -->
+    <div class="task-container">
+        <h2>5. feladat: Hill-rejtjelező (Inverz mátrix)</h2>
+        <p><strong>Feladat:</strong> Számítsa ki az A = [21 11; 23 14] mátrix inverzét mod 26!</p>
+        <div class="solution">
+            <p><strong>Képlet:</strong> <code>A<sup>-1</sup> = (det A)<sup>-1</sup> * adj(A) (mod 26)</code></p>
+            
+            <ol>
+                <li><strong>Determináns (det A):</strong><br>
+                    det A = (21 * 14) - (11 * 23) = 294 - 253 = <strong>41</strong>.<br>
+                    Modulo 26: 41 mod 26 = <strong>15</strong>.
+                </li>
+                <li><strong>A determináns multiplikatív inverze (15<sup>-1</sup> mod 26):</strong><br>
+                    Olyan <code>x</code>-et keresünk, amire <code>15 * x ≡ 1 (mod 26)</code>.<br>
+                    Mivel 15 * 7 = 105, és 105 / 26 = 4, maradék 1 (4 * 26 + 1 = 105).<br>
+                    Tehát: <strong>15<sup>-1</sup> ≡ 7 (mod 26)</strong>.
+                </li>
+                <li><strong>Adjungált mátrix (adj A):</strong><br>
+                    2x2-es esetben: főátló elemeit felcseréljük, mellékátló elemeit negáljuk.<br>
+                    adj A = <div class="matrix"><table><tr><td>14</td><td>-11</td></tr><tr><td>-23</td><td>21</td></tr></table></div><br>
+                    Modulo 26 alakítva:<br>
+                    -11 ≡ 15 (mod 26); -23 ≡ 3 (mod 26).<br>
+                    <strong>adj A ≡ <div class="matrix"><table><tr><td>14</td><td>15</td></tr><tr><td>3</td><td>21</td></tr></table></div> (mod 26)</strong>.
+                </li>
+                <li><strong>Végső inverz mátrix (7 * adj A):</strong><br>
+                    A<sup>-1</sup> ≡ 7 * <div class="matrix"><table><tr><td>14</td><td>15</td></tr><tr><td>3</td><td>21</td></tr></table></div> = <div class="matrix"><table><tr><td>98</td><td>105</td></tr><tr><td>21</td><td>147</td></tr></table></div> (mod 26).<br>
+                    <strong>Elemek mod 26:</strong><br>
+                    98 mod 26 = <strong>20</strong> (mert 3*26+20=98)<br>
+                    105 mod 26 = <strong>1</strong> (mert 4*26+1=105)<br>
+                    21 mod 26 = <strong>21</strong><br>
+                    147 mod 26 = <strong>17</strong> (mert 5*26+17=147)<br><br>
+                    <strong>Végeredmény: A<sup>-1</sup> = <div class="matrix"><table><tr><td>20</td><td>1</td></tr><tr><td>21</td><td>17</td></tr></table></div></strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- 6. Feladat -->
+    <div class="task-container">
+        <h2>6. feladat: MDS kód paraméterei</h2>
+        <p><strong>Feladat:</strong> C(15, 6) MDS kód.</p>
+        <div class="solution">
+            Minimális távolság: <strong>d = 15 - 6 + 1 = 10</strong>.<br>
+            Felismerhető hibák (d-1): <strong>9</strong>.<br>
+            Javítható hibák (floor((d-1)/2)): <strong>4</strong>.
+        </div>
+    </div>
+
+    <!-- 7. Feladat -->
+    <div class="task-container">
+        <h2>7. feladat: Lineáris és Duális kód</h2>
+        <p><strong>Feladat:</strong> G = [1 0 1 1 0; 0 1 0 1 1]. Duális generátor G' és kódolás.</p>
+        <div class="solution">
+            <p><strong>1. Generátormátrix felbontása (G = [I | P]):</strong><br>
+            A bal oldali 2x2-es rész az egységmátrix (I), a jobb oldali 2x3-as rész a P mátrix.<br>
+            <code>P = <div class="matrix"><table><tr><td>1</td><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr></table></div></code>
+            </p>
+            <p><strong>2. P mátrix transzponálása (P<sup>T</sup>):</strong> A sorokból oszlopokat csinálunk.<br>
+            <code>P<sup>T</sup> = <div class="matrix"><table><tr><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td></tr><tr><td>0</td><td>1</td></tr></table></div></code>
+            </p>
+            <p><strong>3. Duális generátormátrix (G' = [P<sup>T</sup> | I]):</strong> A P<sup>T</sup>-hez hozzáillesztünk egy 3x3-as egységmátrixot.<br>
+            <code>G' = <div class="matrix"><table><tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr></table></div></code>
+            </p>
+            <p><strong>4. Üzenetek kódolása (c = u * G'):</strong> Csak azokat a sorait adjuk össze (XOR) G'-nek, ahol az <code>u</code> üzenetvektorban 1-es áll.<br>
+            - <code>u1=(1,1,1)</code>: 1., 2. és 3. sor összege: (10100) ⊕ (11010) ⊕ (01001) = <strong>(00111)</strong><br>
+            - <code>u2=(1,0,1)</code>: 1. és 3. sor összege: (10100) ⊕ (01001) = <strong>(11101)</strong><br>
+            - <code>u3=(1,1,0)</code>: 1. és 2. sor összege: (10100) ⊕ (11010) = <strong>(01110)</strong><br>
+            - <code>u4=(0,1,1)</code>: 2. és 3. sor összege: (11010) ⊕ (01001) = <strong>(10011)</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- 8. Feladat -->
+    <div class="task-container">
+        <h2>8. feladat: Nyelvtanból automata</h2>
+        <p><strong>Feladat:</strong> G = {S,N,P,S} alapján automata átmenetek. Szabályok (példa a levezetéshez):<br>
+        S&rarr;aS | aB | cA; A&rarr;cA | b | bB | cB | bC; B&rarr;cS | a | aC; C&rarr;a | bB.</p>
+        <div class="solution">
+            <p><strong>Szabályok átfordítási logikája:</strong> Minden nagybetű egy-egy állapot. A kisbetűk az átmeneteken lévő feltételek. Ha egy szabály csak kisbetűs lezáró (pl. <code>A&rarr;b</code>), ahhoz bevezetünk egy <strong>új 'E' (Elfogadó) végállapotot</strong>.</p>
+            <ul>
+                <li><strong>S állapotból:</strong> az <code>S&rarr;aS</code> miatt 'a'-val önmagába (S), az <code>S&rarr;aB</code> miatt 'a'-val B-be, az <code>S&rarr;cA</code> miatt 'c'-vel A-ba jutunk.</li>
+                <li><strong>A állapotból:</strong> <code>A&rarr;cA</code> ('c'->A), <code>A&rarr;cB</code> ('c'->B), <code>A&rarr;bB</code> ('b'->B), <code>A&rarr;bC</code> ('b'->C), <code>A&rarr;b</code> ('b'->E).</li>
+                <li><strong>B állapotból:</strong> <code>B&rarr;cS</code> ('c'->S), <code>B&rarr;aC</code> ('a'->C), <code>B&rarr;a</code> ('a'->E).</li>
+                <li><strong>C állapotból:</strong> <code>C&rarr;bB</code> ('b'->B), <code>C&rarr;a</code> ('a'->E).</li>
+            </ul>
+            <strong>Átmeneti függvény (delta) táblázatban:</strong>
+            <table>
+                <tr><th>Állapot</th><th>'a' bemenet</th><th>'b' bemenet</th><th>'c' bemenet</th></tr>
+                <tr><td><strong>-> S (Kezdő)</strong></td><td>{S, B}</td><td>∅</td><td>{A}</td></tr>
+                <tr><td><strong>A</strong></td><td>∅</td><td>{E, B, C}</td><td>{A, B}</td></tr>
+                <tr><td><strong>B</strong></td><td>{E, C}</td><td>∅</td><td>{S}</td></tr>
+                <tr><td><strong>C</strong></td><td>{E}</td><td>{B}</td><td>∅</td></tr>
+                <tr><td><strong>(E) (Elfogadó)</strong></td><td>∅</td><td>∅</td><td>∅</td></tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
