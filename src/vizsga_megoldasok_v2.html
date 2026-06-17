@@ -148,14 +148,34 @@ E:4 A:5 B:6   (6)
     <!-- 6. Feladat -->
     <div class="task-container">
         <h2>6. feladat: Dijkstra algoritmus</h2>
-        <p><strong>Feladat:</strong> Eljutni A-ból I-be a taxival. A gráf viteldíjai hiányoznak a rendszerből, de a módszer azonos.</p>
+        <p><strong>Feladat:</strong> Eljutni A-ból I-be a taxival. A gráf viteldíjai alapján tervezze meg a legolcsóbb utat!</p>
+        <div class="logic">
+            <strong>Megoldás menete:</strong>
+            <ol>
+                <li>Kezdőpont (A) távolsága 0, a többié &infin; (végtelen).</li>
+                <li>Minden lépésben kiválasztjuk a legkisebb távolságú, még nem rögzített csúcsot.</li>
+                <li>Relaxáció: frissítjük a szomszédok értékeit, ha az "aktuális távolság + viteldíj" kisebb a korábbinál.</li>
+            </ol>
+        </div>
         <div class="solution">
-            <p><em>Megjegyzés: Mivel a gráfot (a csúcsok közötti árakat) nem tartalmazza a vizsgasor szövege, a konkrét számítás nem végezhető el.</em> A módszer:</p>
-            <ul>
-                <li>Kezdőpont (A) távolsága 0, a többié &infin;.</li>
-                <li>Minden lépésben kiválasztjuk a legolcsóbb, még nem rögzített csúcsot.</li>
-                <li>Frissítjük a belőle elérhető szomszédok díjait (ha az aktuális díj + az új szakasz díja kevesebb az eddiginél).</li>
-            </ul>
+            <strong>Dijkstra táblázat (A-ból indulva):</strong>
+            <table>
+                <thead>
+                    <tr><th>Választott</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th>I</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>-</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td></tr>
+                    <tr><td><strong>A (0)</strong></td><td>10</td><td>5</td><td>3</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>&infin;</td></tr>
+                    <tr><td><strong>D (3)</strong></td><td>10</td><td>5</td><td><span style="text-decoration: underline;">3</span></td><td>&infin;</td><td>&infin;</td><td>&infin;</td><td>20</td><td>&infin;</td></tr>
+                    <tr><td><strong>C (5)</strong></td><td>10</td><td><span style="text-decoration: underline;">5</span></td><td><span style="text-decoration: underline;">3</span></td><td>14</td><td>14</td><td>7</td><td>20</td><td>&infin;</td></tr>
+                    <tr><td><strong>G (7)</strong></td><td>10</td><td><span style="text-decoration: underline;">5</span></td><td><span style="text-decoration: underline;">3</span></td><td>8</td><td>14</td><td><span style="text-decoration: underline;">7</span></td><td>20</td><td>8</td></tr>
+                    <tr><td><strong>E (8)</strong></td><td>10</td><td><span style="text-decoration: underline;">5</span></td><td><span style="text-decoration: underline;">3</span></td><td><span style="text-decoration: underline;">8</span></td><td>12</td><td><span style="text-decoration: underline;">7</span></td><td>20</td><td>8</td></tr>
+                    <tr><td><strong>I (8)</strong></td><td>10</td><td><span style="text-decoration: underline;">5</span></td><td><span style="text-decoration: underline;">3</span></td><td><span style="text-decoration: underline;">8</span></td><td>12</td><td><span style="text-decoration: underline;">7</span></td><td>20</td><td><span style="text-decoration: underline;">8</span></td></tr>
+                </tbody>
+            </table>
+            <p><em>(A táblázatot elég volt az I csúcs rögzítéséig kitölteni a feladat szerint).</em></p>
+            <p><strong>Legolcsóbb út költsége:</strong> 8 euró.<br>
+            <strong>Útvonal:</strong> A &rarr; C &rarr; G &rarr; I.</p>
         </div>
     </div>
 
