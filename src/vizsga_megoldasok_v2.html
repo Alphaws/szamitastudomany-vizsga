@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Számítástudomány 2 - Dolgozat Megoldások</title>
+    <title>Számítástudomány 2 - Megoldások V2 (Levelező)</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.5; color: #333; margin: 0; padding: 10px; background-color: #fff; }
         h1 { color: #000; border-bottom: 1px solid #000; padding-bottom: 5px; text-align: center; font-size: 1.6em; margin: 10px 0; }
@@ -31,7 +31,7 @@
 </head>
 <body>
 
-<!--    <h1>Számítástudomány 2 - Dolgozat Megoldókulcs</h1>-->
+<!--    <h1>Számítástudomány 2 - Megoldókulcs (V2 - Levelező)</h1>-->
 <!--    <p style="text-align: center; font-style: italic;">Nyomtatásra optimalizált, magyarázatokkal ellátott megoldások</p>-->
 
     <!-- 1. Feladat -->
@@ -250,58 +250,65 @@ A:4 (5) B:5   E:5
 
     <!-- 7. Feladat -->
     <div class="task-container">
-        <h2>7. feladat: Lineáris és Duális kód</h2>
-        <p><strong>Feladat:</strong> G = [1 0 1 1 0; 0 1 0 1 1]. Duális generátor G' és kódolás.</p>
+        <h2>7. feladat: Nyelv automatája</h2>
+        <p><strong>Feladat:</strong> Készítse el a következő nyelv automatáját: L = { a b<sup>3i</sup> a<sup>2j</sup> | i, j &isin; Z<sup>+</sup> }</p>
+        <div class="logic">
+            <p><strong>Megoldás menete:</strong><br>
+            A Z<sup>+</sup> a pozitív egész számokat jelenti (1, 2, 3...), tehát i &ge; 1 és j &ge; 1. A szavak felépítése:
+            <ol>
+                <li>Kezdődik egy 'a' betűvel.</li>
+                <li>Utána jön 'b', méghozzá pontosan 3-szor, 6-szor, 9-szer stb. (legalább 3-szor). Ehhez egy 3 állapotú ciklus (hurok) kell.</li>
+                <li>Végül 'a' betűk jönnek párosával (2, 4, 6... tehát legalább 2-szer). Ehhez egy 2 állapotú ciklus kell, ahol a második állapot a végállapot.</li>
+            </ol>
+            </p>
+        </div>
         <div class="solution">
-            <p><strong>1. Generátormátrix felbontása (G = [I | P]):</strong><br>
-            A bal oldali 2x2-es rész az egységmátrix (I), a jobb oldali 2x3-as rész a P mátrix.<br>
-            <code>P = <div class="matrix"><table><tr><td>1</td><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr></table></div></code>
-            </p>
-            <p><strong>2. P mátrix transzponálása (P<sup>T</sup>):</strong> A sorokból oszlopokat csinálunk.<br>
-            <code>P<sup>T</sup> = <div class="matrix"><table><tr><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td></tr><tr><td>0</td><td>1</td></tr></table></div></code>
-            </p>
-            <p><strong>3. Duális generátormátrix (G' = [P<sup>T</sup> | I]):</strong> A P<sup>T</sup>-hez hozzáillesztünk egy 3x3-as egységmátrixot.<br>
-            <code>G' = <div class="matrix"><table><tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr></table></div></code>
-            </p>
-            <p><strong>4. Üzenetek kódolása (c = u * G'):</strong> Csak azokat a sorait adjuk össze (XOR) G'-nek, ahol az <code>u</code> üzenetvektorban 1-es áll.<br>
-            - <code>u1=(1,1,1)</code>: 1., 2. és 3. sor összege: (10100) ⊕ (11010) ⊕ (01001) = <strong>(00111)</strong><br>
-            - <code>u2=(1,0,1)</code>: 1. és 3. sor összege: (10100) ⊕ (01001) = <strong>(11101)</strong><br>
-            - <code>u3=(1,1,0)</code>: 1. és 2. sor összege: (10100) ⊕ (11010) = <strong>(01110)</strong><br>
-            - <code>u4=(0,1,1)</code>: 2. és 3. sor összege: (11010) ⊕ (01001) = <strong>(10011)</strong>
-            </p>
+            <strong>Az automata gráfja (állapotok és átmenetek):</strong><br>
+            <ul>
+                <li><strong>S0</strong>: Kezdőállapot. &delta;(S0, a) = S1</li>
+                <li><strong>S1, S2, S3, S4</strong>: A 'b' betűk beolvasása. &delta;(S1, b) = S2 &rarr; &delta;(S2, b) = S3 &rarr; &delta;(S3, b) = S4. <br>Ekkor megvan a 3 'b'. A hurok bezárásához (ha több 'b' jönne): &delta;(S4, b) = S2.</li>
+                <li><strong>S5, S6</strong>: Az 'a' betűk beolvasása. S4-ből (amikor már megvan a 3i darab 'b') &delta;(S4, a) = S5 &rarr; &delta;(S5, a) = S6. <br>Az <strong>S6 a Végállapot</strong> (mert itt van meg a 2j darab 'a'). A hurok bezárásához (ha jönne még 2 'a'): &delta;(S6, a) = S5.</li>
+            </ul>
         </div>
     </div>
 
     <!-- 8. Feladat -->
     <div class="task-container">
-        <h2>8. feladat: Nyelvtanból automata</h2>
-        <p><strong>Feladat:</strong> G = {S,N,P,S} alapján automata átmenetek. Szabályok (példa a levezetéshez):<br>
-        S&rarr;aS | aB | cA; A&rarr;cA | b | bB | cB | bC; B&rarr;cS | a | aC; C&rarr;a | bB.</p>
+        <h2>8. feladat: Automata mozgástáblázata és nyelvtana</h2>
+        <p><strong>Feladat:</strong> Adott az M ({S, A, B, C}, {a, b, c, d, e, f}, &delta;, S, {C}) automata az alábbi átmenetekkel: <br>
+        (S, b)=A, (S, a)=A, (S, e)=B, (A, a)=A, (A, b)=C, (B, f)=A, (B, f)=C.<br>
+        Készítse el a mozgástáblázatot és a jobbreguláris nyelvtant!</p>
+        
+        <div class="logic">
+            <p><strong>Megoldás menete:</strong><br>
+            1. A mozgástáblázat a megadott átmenetek halmazos ábrázolása. Mivel (B, f) két helyre is megy (A és C), ez egy Nemdeterminisztikus (NFA) automata.<br>
+            2. A jobbreguláris nyelvtan (<code>X &rarr; xY</code> alakú szabályok) előállítása az automatából: Minden <code>&delta;(X, x) = Y</code> átmenetből csinálunk egy <code>X &rarr; xY</code> szabályt. Ha az 'Y' végállapot (esetünkben a 'C'), akkor felvesszük a lezáró <code>X &rarr; x</code> szabályt is. <em>(Vagy alternatívaként bevezetjük a <code>C &rarr; &epsilon;</code> szabályt).</em>
+            </p>
+        </div>
+        
         <div class="solution">
-            <p><strong>Szabályok átfordítási logikája (A megadott "Segítség" alapján):</strong></p>
-            <ul>
-                <li><code>A &rarr; aB</code> cseréje: <code>&delta;(A, a) = B</code>. (Azaz az 'A' állapotból 'a' bemenetre átlépünk a 'B' állapotba).</li>
-                <li><code>A &rarr; a</code> cseréje: Mivel az automata gráfjában az élekre csak betűket (terminálisokat) írhatunk, az állapotokba pedig nemterminálisokat (nagybetűket), a lezáró szabályokat át kell alakítanunk. A <em>Segítség</em> szerint az <code>A &rarr; a</code> szabályt átírjuk <code>A &rarr; aE</code> alakra, ahol bevezetünk egy új <strong>'E' (Elfogadó)</strong> állapotot.</li>
-                <li><code>E &rarr; &epsilon;</code>: Ez azt jelenti, hogy az 'E' állapotból az "üres szóval" (epszilon) is elfogadó állapotba jutunk, azaz <strong>maga az 'E' a végállapot</strong>.</li>
-            </ul>
-            <p><strong>A szabályok feldolgozása lépésről lépésre:</strong></p>
-            <ul>
-                <li><strong>S állapotból:</strong> az <code>S&rarr;aS</code> miatt 'a'-val önmagába (S), az <code>S&rarr;aB</code> miatt 'a'-val B-be, az <code>S&rarr;cA</code> miatt 'c'-vel A-ba jutunk.</li>
-                <li><strong>A állapotból:</strong> <code>A&rarr;cA</code> ('c'->A), <code>A&rarr;cB</code> ('c'->B), <code>A&rarr;bB</code> ('b'->B), <code>A&rarr;bC</code> ('b'->C). Továbbá a "Segítség" alapján az <code>A&rarr;b</code> átalakul <code>A&rarr;bE</code>-vé, így ('b'->E).</li>
-                <li><strong>B állapotból:</strong> <code>B&rarr;cS</code> ('c'->S), <code>B&rarr;aC</code> ('a'->C). A <code>B&rarr;a</code> átalakul <code>B&rarr;aE</code>-vé, így ('a'->E).</li>
-                <li><strong>C állapotból:</strong> <code>C&rarr;bB</code> ('b'->B). A <code>C&rarr;a</code> átalakul <code>C&rarr;aE</code>-vé, így ('a'->E).</li>
-            </ul>
-            <strong>Átmeneti függvény (delta) táblázatban:</strong>
+            <strong>1. Mozgások táblázata:</strong>
             <table>
-                <tr><th>Állapot</th><th>'a' bemenet</th><th>'b' bemenet</th><th>'c' bemenet</th></tr>
-                <tr><td><strong>-> S (Kezdő)</strong></td><td>{S, B}</td><td>∅</td><td>{A}</td></tr>
-                <tr><td><strong>A</strong></td><td>∅</td><td>{E, B, C}</td><td>{A, B}</td></tr>
-                <tr><td><strong>B</strong></td><td>{E, C}</td><td>∅</td><td>{S}</td></tr>
-                <tr><td><strong>C</strong></td><td>{E}</td><td>{B}</td><td>∅</td></tr>
-                <tr><td><strong>(E) (Elfogadó)</strong></td><td>∅</td><td>∅</td><td>∅</td></tr>
+                <thead>
+                    <tr><th>Állapot</th><th>a</th><th>b</th><th>c</th><th>d</th><th>e</th><th>f</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>&rarr; S</strong></td><td>{A}</td><td>{A}</td><td>&empty;</td><td>&empty;</td><td>{B}</td><td>&empty;</td></tr>
+                    <tr><td><strong>A</strong></td><td>{A}</td><td>{C}</td><td>&empty;</td><td>&empty;</td><td>&empty;</td><td>&empty;</td></tr>
+                    <tr><td><strong>B</strong></td><td>&empty;</td><td>&empty;</td><td>&empty;</td><td>&empty;</td><td>&empty;</td><td>{A, C}</td></tr>
+                    <tr><td><strong>(C)</strong></td><td>&empty;</td><td>&empty;</td><td>&empty;</td><td>&empty;</td><td>&empty;</td><td>&empty;</td></tr>
+                </tbody>
             </table>
+
+            <strong>2. Jobbreguláris nyelvtan helyettesítési szabályai:</strong>
+            <ul>
+                <li><strong>S állapotból:</strong> <code>S &rarr; aA | bA | eB</code></li>
+                <li><strong>A állapotból:</strong> <code>A &rarr; aA | bC</code> <br><em>(Mivel C végállapot, megadjuk a lezáró <code>A &rarr; b</code> szabályt is)</em></li>
+                <li><strong>B állapotból:</strong> <code>B &rarr; fA | fC</code> <br><em>(Mivel C végállapot, megadjuk a lezáró <code>B &rarr; f</code> szabályt is)</em></li>
+                <li><strong>C állapotból:</strong> Nincs kimenő él, de mivel végállapot, megadhatjuk az üres szót: <code>C &rarr; &epsilon;</code></li>
+            </ul>
         </div>
     </div>
 
-</body>
+    </body>
 </html>
