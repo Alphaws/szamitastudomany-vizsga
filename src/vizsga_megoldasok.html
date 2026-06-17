@@ -278,12 +278,18 @@ A:4 (5) B:5   E:5
         <p><strong>Feladat:</strong> G = {S,N,P,S} alapján automata átmenetek. Szabályok (példa a levezetéshez):<br>
         S&rarr;aS | aB | cA; A&rarr;cA | b | bB | cB | bC; B&rarr;cS | a | aC; C&rarr;a | bB.</p>
         <div class="solution">
-            <p><strong>Szabályok átfordítási logikája:</strong> Minden nagybetű egy-egy állapot. A kisbetűk az átmeneteken lévő feltételek. Ha egy szabály csak kisbetűs lezáró (pl. <code>A&rarr;b</code>), ahhoz bevezetünk egy <strong>új 'E' (Elfogadó) végállapotot</strong>.</p>
+            <p><strong>Szabályok átfordítási logikája (A megadott "Segítség" alapján):</strong></p>
+            <ul>
+                <li><code>A &rarr; aB</code> cseréje: <code>&delta;(A, a) = B</code>. (Azaz az 'A' állapotból 'a' bemenetre átlépünk a 'B' állapotba).</li>
+                <li><code>A &rarr; a</code> cseréje: Mivel az automata gráfjában az élekre csak betűket (terminálisokat) írhatunk, az állapotokba pedig nemterminálisokat (nagybetűket), a lezáró szabályokat át kell alakítanunk. A <em>Segítség</em> szerint az <code>A &rarr; a</code> szabályt átírjuk <code>A &rarr; aE</code> alakra, ahol bevezetünk egy új <strong>'E' (Elfogadó)</strong> állapotot.</li>
+                <li><code>E &rarr; &epsilon;</code>: Ez azt jelenti, hogy az 'E' állapotból az "üres szóval" (epszilon) is elfogadó állapotba jutunk, azaz <strong>maga az 'E' a végállapot</strong>.</li>
+            </ul>
+            <p><strong>A szabályok feldolgozása lépésről lépésre:</strong></p>
             <ul>
                 <li><strong>S állapotból:</strong> az <code>S&rarr;aS</code> miatt 'a'-val önmagába (S), az <code>S&rarr;aB</code> miatt 'a'-val B-be, az <code>S&rarr;cA</code> miatt 'c'-vel A-ba jutunk.</li>
-                <li><strong>A állapotból:</strong> <code>A&rarr;cA</code> ('c'->A), <code>A&rarr;cB</code> ('c'->B), <code>A&rarr;bB</code> ('b'->B), <code>A&rarr;bC</code> ('b'->C), <code>A&rarr;b</code> ('b'->E).</li>
-                <li><strong>B állapotból:</strong> <code>B&rarr;cS</code> ('c'->S), <code>B&rarr;aC</code> ('a'->C), <code>B&rarr;a</code> ('a'->E).</li>
-                <li><strong>C állapotból:</strong> <code>C&rarr;bB</code> ('b'->B), <code>C&rarr;a</code> ('a'->E).</li>
+                <li><strong>A állapotból:</strong> <code>A&rarr;cA</code> ('c'->A), <code>A&rarr;cB</code> ('c'->B), <code>A&rarr;bB</code> ('b'->B), <code>A&rarr;bC</code> ('b'->C). Továbbá a "Segítség" alapján az <code>A&rarr;b</code> átalakul <code>A&rarr;bE</code>-vé, így ('b'->E).</li>
+                <li><strong>B állapotból:</strong> <code>B&rarr;cS</code> ('c'->S), <code>B&rarr;aC</code> ('a'->C). A <code>B&rarr;a</code> átalakul <code>B&rarr;aE</code>-vé, így ('a'->E).</li>
+                <li><strong>C állapotból:</strong> <code>C&rarr;bB</code> ('b'->B). A <code>C&rarr;a</code> átalakul <code>C&rarr;aE</code>-vé, így ('a'->E).</li>
             </ul>
             <strong>Átmeneti függvény (delta) táblázatban:</strong>
             <table>
