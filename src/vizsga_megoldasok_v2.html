@@ -34,217 +34,128 @@
 <!--    <h1>Számítástudomány 2 - Megoldókulcs (V2 - Levelező)</h1>-->
 <!--    <p style="text-align: center; font-style: italic;">Nyomtatásra optimalizált, magyarázatokkal ellátott megoldások</p>-->
 
-    <!-- 1. Feladat -->
+        <!-- 1. Feladat -->
     <div class="task-container">
-        <h2>1. feladat: Dijkstra algoritmus</h2>
-        <p><strong>Feladat:</strong> Határozza meg a Dijkstra algoritmus segítségével az F csúcsból az összes csúcsba a legolcsóbb utak költségeit!</p>
-        <div class="logic">
-            <strong>Megoldás menete:</strong>
-            <ol>
-                <li>Kezdőpont (F) távolsága 0, a többié ∞ (végtelen).</li>
-                <li>Válasszuk ki a legkisebb távolságú, még nem rögzített csúcsot.</li>
-                <li>Relaxáció: ha az aktuális távolság + az él súlya kisebb a szomszéd eddigi távolságánál, írjuk felül.</li>
-            </ol>
-        </div>
+        <h2>1. feladat: MDS kód paraméterei</h2>
+        <p><strong>Feladat:</strong> Adott egy C(15, 4) paraméterű maximális távolságú kód. Adja meg a felismerhető és javítható hibák számát!</p>
         <div class="solution">
-            <strong>Dijkstra táblázat (F-ből indulva):</strong>
-            <table>
-                <thead>
-                    <tr><th>Választott</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>G</th><th>H</th><th>J</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>-</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>∞</td></tr>
-                    <tr><td><strong>F (0)</strong></td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>11</td><td>12</td><td>∞</td><td>10</td></tr>
-                    <tr><td><strong>J (10)</strong></td><td>∞</td><td>∞</td><td>∞</td><td>∞</td><td>11</td><td>12</td><td>22</td><td><span style="text-decoration: underline;">10</span></td></tr>
-                    <tr><td><strong>E (11)</strong></td><td>∞</td><td>∞</td><td>17</td><td>18</td><td><span style="text-decoration: underline;">11</span></td><td>12</td><td>20</td><td>10</td></tr>
-                    <tr><td><strong>G (12)</strong></td><td>∞</td><td>∞</td><td>15</td><td>18</td><td>11</td><td><span style="text-decoration: underline;">12</span></td><td>20</td><td>10</td></tr>
-                    <tr><td><strong>C (15)</strong></td><td>22</td><td>24</td><td><span style="text-decoration: underline;">15</span></td><td>18</td><td>11</td><td>12</td><td>20</td><td>10</td></tr>
-                    <tr><td><strong>D (18)</strong></td><td>22</td><td>24</td><td>15</td><td><span style="text-decoration: underline;">18</span></td><td>11</td><td>12</td><td>20</td><td>10</td></tr>
-                    <tr><td><strong>H (20)</strong></td><td>22</td><td>24</td><td>15</td><td>18</td><td>11</td><td>12</td><td><span style="text-decoration: underline;">20</span></td><td>10</td></tr>
-                    <tr><td><strong>A (22)</strong></td><td><span style="text-decoration: underline;">22</span></td><td>24</td><td>15</td><td>18</td><td>11</td><td>12</td><td>20</td><td>10</td></tr>
-                    <tr><td><strong>B (24)</strong></td><td>22</td><td><span style="text-decoration: underline;">24</span></td><td>15</td><td>18</td><td>11</td><td>12</td><td>20</td><td>10</td></tr>
-                </tbody>
-            </table>
-            <p><strong>Végeredmény (költségek F-ből):</strong> A: 22, B: 24, C: 15, D: 18, E: 11, G: 12, H: 20, J: 10.</p>
+            <strong>Megoldás:</strong><br>
+            MDS kódnál a minimális távolság: <code>d = n - k + 1</code>.<br>
+            Adatok: n = 15, k = 4.<br>
+            Minimális távolság (d): d = 15 - 4 + 1 = <strong>12</strong>.<br>
+            Felismerhető hibák maximális száma: <code>f = d - 1</code> = 12 - 1 = <strong>11</strong>.<br>
+            Javítható hibák maximális száma: <code>t = &lfloor;(d - 1) / 2&rfloor;</code> = &lfloor;11 / 2&rfloor; = <strong>5</strong>.
         </div>
     </div>
 
     <!-- 2. Feladat -->
     <div class="task-container">
-        <h2>2. feladat: Huffman kódolás</h2>
-        <p><strong>Feladat:</strong> A:4, B:5, C:3, D:2, E:5. Huffman kódok és bitek száma.</p>
-        <div class="logic">
-            <strong>Megoldás menete:</strong> Mindig a két legkisebb gyakoriságút vonjuk össze.
-        </div>
+        <h2>2. feladat: Lineáris kód ekvivalens szisztematikus mátrixa</h2>
+        <p><strong>Feladat:</strong> Adott G = [0 1 0 1 1; 0 0 1 1 0; 1 1 0 1 0]. Adjon meg egy ekvivalens szisztematikus kódot G' és H' mátrixszal!</p>
         <div class="solution">
-            <strong>Huffman-fa felépítésének lépései:</strong><br>
-            <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px;">
-                <div style="border: 1px solid #ccc; padding: 10px; background: #fff;">
-                    <em>Kezdetben:</em><br>
-                    <pre style="font-family: monospace; line-height: 1.2; margin: 0;">
-D:2  C:3  A:4  B:5  E:5
-                    </pre>
-                </div>
-                <div style="border: 1px solid #ccc; padding: 10px; background: #fff;">
-                    <em>1. lépés: D(2)+C(3)=5</em><br>
-                    <pre style="font-family: monospace; line-height: 1.2; margin: 0;">
-  (5)
-  / \
-D:2 C:3  A:4  B:5  E:5
-                    </pre>
-                </div>
-                <div style="border: 1px solid #ccc; padding: 10px; background: #fff;">
-                    <em>2. lépés: A(4)+5=9</em><br>
-                    <pre style="font-family: monospace; line-height: 1.2; margin: 0;">
-    (9)
-    / \
-  A:4 (5)
-      / \
-    D:2 C:3  B:5  E:5
-                    </pre>
-                </div>
-                <div style="border: 1px solid #ccc; padding: 10px; background: #fff;">
-                    <em>3. lépés: B(5)+E(5)=10</em><br>
-                    <pre style="font-family: monospace; line-height: 1.2; margin: 0;">
-    (9)         (10)
-    / \         /  \
-  A:4 (5)     B:5  E:5
-      / \
-    D:2 C:3
-                    </pre>
-                </div>
-            </div>
-            <strong>4. lépés (Végső fa kódokkal): 9+10=19</strong><br>
-            <pre style="font-family: monospace; line-height: 1.2; border: 1px solid #ccc; padding: 10px; display: inline-block; background: #fff;">
-      (19)
-     /    \
-   0/      \1
-  (9)      (10)
-  / \      /  \
-0/  \1   0/    \1
-A:4 (5) B:5   E:5
-    / \
-  0/   \1
- D:2   C:3
-            </pre><br>
-            <strong>Kódok:</strong> A: <code>00</code>, D: <code>010</code>, C: <code>011</code>, B: <code>10</code>, E: <code>11</code>.<br>
-            <strong>Bitek száma Huffman-nal:</strong> 4*2 + 2*3 + 3*3 + 5*2 + 5*2 = 8+6+9+10+10 = <strong>43 bit</strong>.<br>
-            <strong>Bitek száma kód nélkül:</strong> 19 betű * 3 bit = <strong>57 bit</strong>.
+            <p><strong>1. G' (Szisztematikus generátormátrix [I | P]) előállítása:</strong><br>
+            Cél, hogy a mátrix bal oldala egy 3x3-as egységmátrix legyen. Ehhez sorcseréket és sorok összeadását (XOR) alkalmazzuk.<br>
+            Eredeti G:<br>
+            r1: 0 1 0 1 1<br>
+            r2: 0 0 1 1 0<br>
+            r3: 1 1 0 1 0<br><br>
+            Tegyük az r3-at az első helyre (mert 1-gyel kezdődik), az r1-et a másodikra (mert 0 1-gyel kezdődik), r2 marad harmadik:<br>
+            r1': 1 1 0 1 0<br>
+            r2': 0 1 0 1 1<br>
+            r3': 0 0 1 1 0<br><br>
+            Hogy az r1' második oszlopa 0 legyen, adjuk hozzá (XOR) az r2'-t: r1'' = r1' &oplus; r2' = (1 0 0 0 1).<br>
+            A kész szisztematikus mátrix (G'):<br>
+            <code>G' = <div class="matrix"><table><tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr></table></div></code><br>
+            Itt a P mátrix a jobb oldali 3x2-es blokk: P = [0 1; 1 1; 1 0].
+            </p>
+            <p><strong>2. H' (Paritásellenőrző mátrix [P<sup>T</sup> | I]) előállítása:</strong><br>
+            P transzponáltja (P<sup>T</sup>) = [0 1 1; 1 1 0]. Ehhez jobbról hozzátoldunk egy 2x2-es egységmátrixot.<br>
+            <code>H' = <div class="matrix"><table><tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr></table></div></code>
+            </p>
         </div>
     </div>
 
     <!-- 3. Feladat -->
     <div class="task-container">
-        <h2>3. feladat: NFA -> DFA konverzió</h2>
-        <p><strong>Feladat:</strong> Adja meg az eredeti NFA és az új, teljesen definiált DFA mozgástáblázatát!</p>
-        
+        <h2>3. feladat: Hill-rejtjelező (Kódolás és inverz)</h2>
+        <p><strong>Feladat:</strong> A = [18 15; 11 13]. Adja meg a CSIRKE szó rejtjelezett változatát és az A mátrix inverzét mod 26!</p>
         <div class="solution">
-            <h3>1. Eredeti NFA mozgástáblázat:</h3>
-            <table>
-                <thead>
-                    <tr><th>Állapot</th><th>'a'</th><th>'b'</th><th>'c'</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>-> S</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C}</td></tr>
-                    <tr><td><strong>A</strong></td><td>-</td><td>-</td><td>{B}</td></tr>
-                    <tr><td><strong>B*</strong></td><td>-</td><td>-</td><td>-</td></tr>
-                    <tr><td><strong>C</strong></td><td>-</td><td>-</td><td>{B}</td></tr>
-                </tbody>
-            </table>
-
-            <h3>2. Új DFA mozgástáblázat (Részhalmaz-konstrukció):</h3>
-            <table>
-                <thead>
-                    <tr><th>DFA állapot</th><th>'a'</th><th>'b'</th><th>'c'</th><th>Típus</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>-> {S}</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C}</td><td>Kezdő</td></tr>
-                    <tr><td><strong>{S, A}</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C, B}</td><td></td></tr>
-                    <tr><td><strong>{S, C}</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C, B}</td><td></td></tr>
-                    <tr><td><strong>{S, C, B}</strong></td><td>{S}</td><td>{S, A}</td><td>{S, C, B}</td><td>Végállapot</td></tr>
-                </tbody>
-            </table>
-            <p><em>Mivel minden állapothoz minden bemeneti jelre van átmenet, az automata teljesen definiált. (A hiányzó kombinációk, pl. {A, B} nem elérhetőek a kezdőállapotból).</em></p>
+            <p><strong>1. A inverze mod 26:</strong><br>
+            - det(A) = 18*13 - 15*11 = 234 - 165 = 69. Modulo 26: <strong>17</strong>.<br>
+            - 17 multiplikatív inverze: 17 * x &equiv; 1 (mod 26) &rarr; x = -3 &equiv; <strong>23</strong> (mert 17*3 = 51 = 2*26 - 1).<br>
+            - Adjungált mátrix: [13, -15; -11, 18] &equiv; [13, 11; 15, 18] (mod 26).<br>
+            - A<sup>-1</sup> = 23 * adj(A) = [299, 253; 345, 414]. Modulo 26 leosztva:<br>
+            <code>A<sup>-1</sup> = <div class="matrix"><table><tr><td>13</td><td>19</td></tr><tr><td>7</td><td>24</td></tr></table></div></code>
+            </p>
+            <p><strong>2. A CSIRKE szó kódolása:</strong><br>
+            A betűk kódjai (A=0, B=1...): C=2, S=18, I=8, R=17, K=10, E=4.<br>
+            Vektorok: v1=[2, 18], v2=[8, 17], v3=[10, 4]. Szorozzuk be az eredeti A mátrixszal (c = A*v mod 26):<br>
+            - <code>c1</code>: (18*2 + 15*18) = 306 &equiv; 20 (U). (11*2 + 13*18) = 256 &equiv; 22 (W). Eredmény: <strong>UW</strong>.<br>
+            - <code>c2</code>: (18*8 + 15*17) = 399 &equiv; 9 (J). (11*8 + 13*17) = 309 &equiv; 23 (X). Eredmény: <strong>JX</strong>.<br>
+            - <code>c3</code>: (18*10 + 15*4) = 240 &equiv; 6 (G). (11*10 + 13*4) = 162 &equiv; 6 (G). Eredmény: <strong>GG</strong>.<br>
+            Titkosított szó: <strong>UWJXGG</strong>.
+            </p>
         </div>
     </div>
 
     <!-- 4. Feladat -->
     <div class="task-container">
-        <h2>4. feladat: Szindróma dekódolás</h2>
-        <p><strong>Feladat:</strong> v1=10100, v2=11101, v3=11001 szavak dekódolása.</p>
+        <h2>4. feladat: Minimális automata</h2>
+        <p><strong>Feladat:</strong> Adott automata (állapotok 1-8, 7-es a végállapot). Készítse el a minimális automatát!</p>
         <div class="solution">
-            <p><strong>Számítási elv:</strong> A szindróma <code>s = v * H<sup>T</sup></code>. Bináris esetben ez azt jelenti, hogy összeadjuk (XOR) a H<sup>T</sup> mátrix azon sorait, ahol a <code>v</code> vektorban 1-es áll.</p>
-            
-            <p><strong>H<sup>T</sup> sorai:</strong> r1=(110), r2=(101), r3=(100), r4=(010), r5=(001)</p>
-
-            <h3>1. v1 = 10100 dekódolása:</h3>
-            <ul>
-                <li><strong>Szindróma (s1):</strong> Az 1. és 3. bit 1-es -> r1 + r3 = (110) ⊕ (100) = <strong>010</strong>.</li>
-                <li><strong>Hiba keresése:</strong> A táblázatban 010-hoz tartozó hiba: <code>e1 = 00010</code>.</li>
-                <li><strong>Kódszó (c1):</strong> c1 = v1 ⊕ e1 = 10100 ⊕ 00010 = <strong>10110</strong>.</li>
-            </ul>
-
-            <h3>2. v2 = 11101 dekódolása:</h3>
-            <ul>
-                <li><strong>Szindróma (s2):</strong> Az 1., 2., 3. és 5. bit 1-es -> r1 ⊕ r2 ⊕ r3 ⊕ r5 = (110) ⊕ (101) ⊕ (100) ⊕ (001) = <strong>110</strong>.</li>
-                <li><strong>Hiba keresése:</strong> A táblázatban 110-hoz tartozó hiba: <code>e2 = 10000</code>.</li>
-                <li><strong>Kódszó (c2):</strong> c2 = v2 ⊕ e2 = 11101 ⊕ 10000 = <strong>01101</strong>.</li>
-            </ul>
-
-            <h3>3. v3 = 11001 dekódolása:</h3>
-            <ul>
-                <li><strong>Szindróma (s3):</strong> Az 1., 2. és 5. bit 1-es -> r1 ⊕ r2 ⊕ r5 = (110) ⊕ (101) ⊕ (001) = <strong>010</strong>.</li>
-                <li><strong>Hiba keresése:</strong> A táblázatban 010-hoz tartozó hiba: <code>e3 = 00010</code>.</li>
-                <li><strong>Kódszó (c3):</strong> c3 = v3 ⊕ e3 = 11001 ⊕ 00010 = <strong>11011</strong>.</li>
-            </ul>
+            <p><strong>Megoldás menete (Ekvivalencia osztályok iterációja):</strong><br>
+            Eredeti állapotok és átmenetek (a, b):<br>
+            1&rarr;(2,5), 2&rarr;(3,7), 3&rarr;(3,6), 4&rarr;(3,7), 5&rarr;(7,3), 6&rarr;(4,5), 7(F)&rarr;(1,7), 8&rarr;(7,3).<br><br>
+            - <strong>0. lépés:</strong> Végállapotok és Nem végállapotok felosztása: <code>P0 = {7}, {1,2,3,4,5,6,8}</code><br>
+            - <strong>1. lépés:</strong> A nem végállapotokat szétbontjuk aszerint, hová mutatnak P0-ban. 2, 4 'b'-re a 7-esbe mutat; 5, 8 'a'-ra a 7-esbe mutat; a többi egyikre sem.<br> 
+            <code>P1 = {7}, {2,4}, {5,8}, {1,3,6}</code><br>
+            - <strong>2. lépés:</strong> Az {1,3,6} halmazt tovább bontjuk P1 alapján. Az 1-es és 6-os a {2,4} illetve {5,8} osztályokba mutatnak ('a' és 'b' jelre rendre), míg a 3-as a {1,3,6} halmazon belül marad. Így szétválnak.<br>
+            <code>P2 = {7}, {2,4}, {5,8}, {1,6}, {3}</code><br>
+            - <strong>3. lépés:</strong> A további bontás nem hoz új osztályt, az algoritmus megállt.
+            </p>
+            <p><strong>Minimalizált automata állapotai (Összevonások):</strong><br>
+            Új állapotok: <strong>A={1,6} (Kezdő), B={2,4}, C={3}, D={5,8}, E={7} (Végállapot)</strong>.<br>
+            Új átmenetek: A&rarr;(B,D), B&rarr;(C,E), C&rarr;(C,A), D&rarr;(E,C), E&rarr;(A,E).
+            </p>
         </div>
     </div>
 
     <!-- 5. Feladat -->
     <div class="task-container">
-        <h2>5. feladat: Hill-rejtjelező (Inverz mátrix)</h2>
-        <p><strong>Feladat:</strong> Számítsa ki az A = [21 11; 23 14] mátrix inverzét mod 26!</p>
+        <h2>5. feladat: Huffman kódolás</h2>
+        <p><strong>Feladat:</strong> G:2, H:4, E:4, A:5, B:6. Huffman kódok és bitek száma.</p>
         <div class="solution">
-            <p><strong>Képlet:</strong> <code>A<sup>-1</sup> = (det A)<sup>-1</sup> * adj(A) (mod 26)</code></p>
-            
-            <ol>
-                <li><strong>Determináns (det A):</strong><br>
-                    det A = (21 * 14) - (11 * 23) = 294 - 253 = <strong>41</strong>.<br>
-                    Modulo 26: 41 mod 26 = <strong>15</strong>.
-                </li>
-                <li><strong>A determináns multiplikatív inverze (15<sup>-1</sup> mod 26):</strong><br>
-                    Olyan <code>x</code>-et keresünk, amire <code>15 * x ≡ 1 (mod 26)</code>.<br>
-                    Mivel 15 * 7 = 105, és 105 / 26 = 4, maradék 1 (4 * 26 + 1 = 105).<br>
-                    Tehát: <strong>15<sup>-1</sup> ≡ 7 (mod 26)</strong>.
-                </li>
-                <li><strong>Adjungált mátrix (adj A):</strong><br>
-                    2x2-es esetben: főátló elemeit felcseréljük, mellékátló elemeit negáljuk.<br>
-                    adj A = <div class="matrix"><table><tr><td>14</td><td>-11</td></tr><tr><td>-23</td><td>21</td></tr></table></div><br>
-                    Modulo 26 alakítva:<br>
-                    -11 ≡ 15 (mod 26); -23 ≡ 3 (mod 26).<br>
-                    <strong>adj A ≡ <div class="matrix"><table><tr><td>14</td><td>15</td></tr><tr><td>3</td><td>21</td></tr></table></div> (mod 26)</strong>.
-                </li>
-                <li><strong>Végső inverz mátrix (7 * adj A):</strong><br>
-                    A<sup>-1</sup> ≡ 7 * <div class="matrix"><table><tr><td>14</td><td>15</td></tr><tr><td>3</td><td>21</td></tr></table></div> = <div class="matrix"><table><tr><td>98</td><td>105</td></tr><tr><td>21</td><td>147</td></tr></table></div> (mod 26).<br>
-                    <strong>Elemek mod 26:</strong><br>
-                    98 mod 26 = <strong>20</strong> (mert 3*26+20=98)<br>
-                    105 mod 26 = <strong>1</strong> (mert 4*26+1=105)<br>
-                    21 mod 26 = <strong>21</strong><br>
-                    147 mod 26 = <strong>17</strong> (mert 5*26+17=147)<br><br>
-                    <strong>Végeredmény: A<sup>-1</sup> = <div class="matrix"><table><tr><td>20</td><td>1</td></tr><tr><td>21</td><td>17</td></tr></table></div></strong>
-                </li>
-            </ol>
+            <strong>Huffman-fa felépítése:</strong><br>
+            <pre style="font-family: monospace; line-height: 1.2; border: 1px solid #eee; padding: 10px; display: inline-block;">
+      (21)
+     /    \
+   0/      \1
+  (9)      (12)
+  / \      /  \
+0/  \1   0/    \1
+E:4 A:5 B:6   (6)
+              / \
+            0/   \1
+           G:2   H:4
+            </pre><br>
+            <strong>Lépések:</strong> 1. G(2)+H(4)=6; 2. E(4)+A(5)=9; 3. B(6)+6=12; 4. 9+12=21.<br>
+            <strong>Kódok:</strong> E: <code>00</code>, A: <code>01</code>, B: <code>10</code>, G: <code>110</code>, H: <code>111</code>.<br>
+            <strong>Bitek száma Huffman-nal:</strong> 4*2 + 5*2 + 6*2 + 2*3 + 4*3 = 8+10+12+6+12 = <strong>48 bit</strong>.<br>
+            <strong>Bitek száma kód nélkül:</strong> 5 betűhöz 3 bit kell. Összesen 21 betű * 3 bit = <strong>63 bit</strong>.
         </div>
     </div>
 
     <!-- 6. Feladat -->
     <div class="task-container">
-        <h2>6. feladat: MDS kód paraméterei</h2>
-        <p><strong>Feladat:</strong> C(15, 6) MDS kód.</p>
+        <h2>6. feladat: Dijkstra algoritmus</h2>
+        <p><strong>Feladat:</strong> Eljutni A-ból I-be a taxival. A gráf viteldíjai hiányoznak a rendszerből, de a módszer azonos.</p>
         <div class="solution">
-            Minimális távolság: <strong>d = 15 - 6 + 1 = 10</strong>.<br>
-            Felismerhető hibák (d-1): <strong>9</strong>.<br>
-            Javítható hibák (floor((d-1)/2)): <strong>4</strong>.
+            <p><em>Megjegyzés: Mivel a gráfot (a csúcsok közötti árakat) nem tartalmazza a vizsgasor szövege, a konkrét számítás nem végezhető el.</em> A módszer:</p>
+            <ul>
+                <li>Kezdőpont (A) távolsága 0, a többié &infin;.</li>
+                <li>Minden lépésben kiválasztjuk a legolcsóbb, még nem rögzített csúcsot.</li>
+                <li>Frissítjük a belőle elérhető szomszédok díjait (ha az aktuális díj + az új szakasz díja kevesebb az eddiginél).</li>
+            </ul>
         </div>
     </div>
 
