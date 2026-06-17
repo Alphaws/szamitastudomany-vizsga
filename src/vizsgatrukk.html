@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hill-rejtjelező - Vizsgatrükk</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.5; color: #333; margin: 0 auto; padding: 20px; max-width: 800px; background-color: #fff; }
+        h1 { color: #000; border-bottom: 2px solid #ffc107; padding-bottom: 10px; text-align: center; }
+        .trick-box { margin-top: 20px; padding: 20px; background-color: #fff3cd; border-left: 5px solid #ffc107; border-radius: 8px; font-size: 1.1em; }
+        code { font-family: monospace; font-weight: bold; background-color: #fff; padding: 2px 6px; border: 1px solid #ddd; border-radius: 4px; }
+        ul { margin-top: 15px; }
+        li { margin-bottom: 10px; }
+        @media print {
+            body { padding: 0; }
+            .trick-box { border: 1px solid #000; background-color: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💡 Vizsgatrükk: Hill-rejtjelező (Mátrix Inverz)</h1>
+    <p style="text-align: center; font-style: italic;">Gyorsított módszer feleletválasztós tesztekhez a teljes levezetés helyett.</p>
+
+    <div class="trick-box">
+        <strong>Ha 4 kész lehetőségből kell választanod, NEM KELL végigszámolni az inverzet!</strong><br><br>
+        A mátrix-inverz definíciója szerint: <code>A * A<sup>-1</sup> = Egységmátrix</code>. <br>
+        Ez azt jelenti, hogy az eredeti mátrix első sorát összeszorozva a helyes válasz első oszlopával <strong>pontosan 1-et kell kapnod (modulo 26)</strong>.<br>
+        
+        <h3>Példa:</h3>
+        <p>Eredeti mátrix (A) = [21 11; 23 14]</p>
+        <ul>
+            <li>Vedd az A mátrix első sorát: <code>(21, 11)</code></li>
+            <li>Vedd az egyik tesztelt válaszlehetőség első oszlopát: pl. <code>(20, 21)</code></li>
+            <li>Számold ki a skaláris szorzatot: <code>21*20 + 11*21 = 420 + 231 = 651</code></li>
+            <li>Ellenőrizd modulo 26: <code>651 mod 26 = 1</code> (Mivel 650 maradéktalanul osztható 26-tal: 25 * 26 = 650).</li>
+        </ul>
+        
+        <p>Ha a szorzat maradéka <strong>nem 1</strong>, azt az opciót azonnal kihúzhatod. Általában 1, maximum 2 ilyen gyors szorzással garantáltan megtalálod a helyes választ anélkül, hogy determinánst vagy adjungáltat kéne számolnod.</p>
+
+        <p><strong>Pro-tipp a fejben számoláshoz:</strong> Modulo 26 esetén dolgozhatsz negatív számokkal is! <br>
+        <code>21 ≡ -5</code> és <code>11 ≡ -15</code>. <br>
+        Így a fenti szorzat: <code>(-5)*20 + (-15)*21 = -100 - 315 = -415</code>.<br>
+        <code>-415 mod 26 = 1</code> (Mert -416 az -16 * 26).</p>
+    </div>
+
+</body>
+</html>
