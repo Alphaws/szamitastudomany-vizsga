@@ -234,6 +234,19 @@ A:4 (5) B:5   E:5
                     <strong>Végeredmény: A<sup>-1</sup> = <div class="matrix"><table><tr><td>20</td><td>1</td></tr><tr><td>21</td><td>17</td></tr></table></div></strong>
                 </li>
             </ol>
+            <div style="margin-top: 15px; padding: 10px; background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+                <strong>💡 Vizsgatrükk (Feleletválasztós tesztekhez):</strong><br>
+                Ha 4 kész lehetőségből kell választanod, <strong>NEM KELL végigszámolni az inverzet!</strong><br>
+                A definíció szerint: <code>A * A<sup>-1</sup> = Egységmátrix</code>. Ez azt jelenti, hogy az eredeti mátrix első sorát összeszorozva a helyes válasz első oszlopával <strong>1-et kell kapnod (modulo 26)</strong>.<br>
+                <em>Példa a fenti számokkal:</em>
+                <ul>
+                    <li>A első sora: <code>(21, 11)</code></li>
+                    <li>A tesztelt válasz első oszlopa: <code>(20, 21)</code></li>
+                    <li>Szorzatuk: <code>21*20 + 11*21 = 420 + 231 = 651</code></li>
+                    <li><code>651 mod 26 = 1</code> (Mivel 650 osztható 26-tal).</li>
+                </ul>
+                Ha a szorzat maradéka nem 1, azt az opciót <strong>azonnal kihúzhatod</strong>. Általában 1, maximum 2 ilyen szorzással megtalálod a helyes választ. (Gyorsításhoz negatív számokkal is számolhatsz: 21 ≡ -5; 11 ≡ -15. Így a szorzat: -5*20 + -15*21, ami sokkal kisebb számokat ad).
+            </div>
         </div>
     </div>
 
